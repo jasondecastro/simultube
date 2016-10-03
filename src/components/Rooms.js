@@ -39,16 +39,16 @@ class Rooms extends Component {
     return (
       <div style={rooms}>
         <h2>
-          <Link to="/rooms/1">The Garden</Link>
+          <Link to="/rooms/the_garden">The Garden</Link>
         </h2>
         <p>{this.state.topics[0]}</p>
 
         <h2>
-          <Link to="/rooms/2">The Pool</Link>
+          <Link to="/rooms/the_pool">The Pool</Link>
         </h2>
         <p>{this.state.topics[1]}</p>
         <h2>
-          <Link to="/rooms/3">The Pool</Link>
+          <Link to="/rooms/the_parlor">The Parlor</Link>
         </h2>
         <p>{this.state.topics[2]}</p>
       </div>
