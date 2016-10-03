@@ -10,8 +10,6 @@ import Chatroom from './components/Chatroom'
 ReactDOM.render(
   <Router history={browserHistory}>
     <Route path="/" component={App} />
-    <Route path="/rooms/:id" component={Chatroom} />
-
     <Route path="/hallway" component={App} />
     <Route path="/rooms/:id" component={Chatroom} />
   </Router>,
