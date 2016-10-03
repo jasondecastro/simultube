@@ -5,7 +5,9 @@ class Messages extends Component {
     return (
       <div className="panel panel-default">
         <div className="panel-body" id="messages">
-          <p><strong>jason:</strong> hey</p>
+          { this.props.messages().map((payload, index)=> {
+            return <p key={index}><strong>{payload.username}:</strong> {payload.content}</p>
+          })}
         </div>
       </div>
     )
