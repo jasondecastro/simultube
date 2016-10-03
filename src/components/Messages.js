@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
 
 const messageStyle = {
   width: '400px',
@@ -7,6 +8,11 @@ const messageStyle = {
 }
 
 class Messages extends Component {
+  componentDidUpdate() {
+    var node = ReactDOM.findDOMNode(this)
+    node.scrollTop = node.scrollHeight
+  }
+
   render() {
     return (
       <div className="panel panel-default" style={messageStyle}>
