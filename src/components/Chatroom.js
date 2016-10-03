@@ -13,7 +13,7 @@ class Chatroom extends Component {
     super(props)
   
     this.state = {
-      topic: props.params.slug.replace(/_/g, " "),
+      topic: props.params.id,
       messages: []
     }
   }
