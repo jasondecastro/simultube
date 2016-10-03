@@ -5,7 +5,8 @@ import Messages from './Messages'
 import MessageForm from './MessageForm'
 
 const chatroomStyle = {
-  paddingLeft: '100px'
+  paddingLeft: '100px',
+  margin: '0 auto'
 }
 
 class Chatroom extends Component {
@@ -41,18 +42,32 @@ class Chatroom extends Component {
       topic: 'banana',
       messages: []
     }
-
-
- 
   }
 
   sendMessage(message) {
     this.setState((state) => ({
       messages: state.messages.concat({
-        username: 'jason',
+        sender: 'jason',
         content: message
       })
     }))
+  }
+
+  fetchMessages() {
+    const url = 'http://localhost:8000/api/v1/rooms/1'
+
+    const messages = fetch(url)
+    .then(response => {
+      return response.json()
+    }).then(responseBody => {
+        this.setState({
+          messages: responseBody.data.attributes.messages
+        })
+    })
+  }
+
+  componentWillMount() {
+    this.fetchMessages()
   }
 
   render() {
