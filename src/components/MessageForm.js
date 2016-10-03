@@ -4,8 +4,7 @@ class MessageForm extends Component {
   render() {
     return (
       <form>
-        <textarea className="form-control" />
-        <input type="hidden" />
+        <input type="text" className="form-control" />
       </form>
     )
   }
