@@ -47,10 +47,26 @@ class Chatroom extends Component {
   sendMessage(message) {
     this.setState((state) => ({
       messages: state.messages.concat({
-        sender: 'jason',
+        sender: 'Jason',
         content: message
       })
     }))
+    
+    fetch('http://localhost:8000/api/v1/messages',
+    {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify({
+        message: {
+          sender: 'Jason',
+          content: message,
+          room_id: '1'
+        }
+      })
+    })
   }
 
   fetchMessages() {
