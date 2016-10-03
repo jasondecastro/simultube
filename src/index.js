@@ -1,9 +1,19 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+
+import { Router, Route, browserHistory } from 'react-router'
+
 import App from './components/App'
-import './index.css'
+import Rooms from './components/Rooms'
+import Chatroom from './components/Chatroom'
 
 ReactDOM.render(
-  <App />,
+  <Router history={browserHistory}>
+    <Route path="/" component={App} />
+    <Route path="/rooms/:id" component={Chatroom} />
+
+    <Route path="/hallway" component={App} />
+    <Route path="/rooms/:id" component={Chatroom} />
+  </Router>,
   document.getElementById('root')
 )
