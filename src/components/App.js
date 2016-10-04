@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import '../static/bootstrap.min.css'
+import '../static/hallway.css'
+
 
 import Rooms from './Rooms'
 
@@ -14,7 +16,7 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
+      <div>
         <Rooms />
       </div>
     )
