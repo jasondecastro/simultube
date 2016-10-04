@@ -4,7 +4,7 @@ import { Link } from 'react-router'
 const rooms = {
   margin: '0 auto',
   paddingLeft: '15px',
-  paddingTop: '210px'
+  paddingTop: '100px'
 }
 
 const doorStyle = {
@@ -17,11 +17,13 @@ const basicStyle = {
   color: 'white'
 }
 
-class Rooms extends Component {
+class Hallway extends Component {
   constructor() {
     super()
+
     this.state = {
-      topics: []
+      topics: [],
+      nickname: localStorage.getItem('nickname')
     }
   }
 
@@ -42,13 +44,49 @@ class Rooms extends Component {
     })
   }
 
+  setNickname() {
+    const url = 'https://randomuser.me/api/'
+
+    const nickname = fetch(url)
+    .then(response => {
+      return response.json()
+    }).then(responseBody => {
+      localStorage.setItem('nickname', responseBody.results[0].login.username)
+      this.setState({
+        nickname: responseBody.results[0].login.username
+      })
+    })
+  }
+
+  getNicknameFromStorage() {
+    return localStorage.getItem('nickname')
+  }
+
   componentWillMount() {
     this.fetchTopics()
+    if (localStorage.getItem('nickname') === null) {
+      this.setNickname()
+    }
+  }
+
+  changeNicknameValue(event) {
+    this.setState({
+      nickname: event.target.value
+    })
+  }
+
+  handleNicknameChange(event) {
+    event.preventDefault();
+    localStorage.setItem('nickname', this.state.nickname)
   }
 
   render() {
     return (
       <div className="wrapper">
+        <form onSubmit={this.handleNicknameChange.bind(this)}>
+          <input value={this.state.nickname} onChange={this.changeNicknameValue.bind(this)}></input>
+        </form>
+        <center><h1>{this.state.nickname}</h1></center>
         <div className="row" style={rooms}>
 
           <div className="col-md-4">
@@ -87,4 +125,4 @@ class Rooms extends Component {
   }
 }
 
-export default Rooms
+export default Hallway
