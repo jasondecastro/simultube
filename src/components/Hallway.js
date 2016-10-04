@@ -4,7 +4,7 @@ import { Link } from 'react-router'
 const rooms = {
   margin: '0 auto',
   paddingLeft: '15px',
-  paddingTop: '210px'
+  paddingTop: '100px'
 }
 
 const doorStyle = {
@@ -17,11 +17,12 @@ const basicStyle = {
   color: 'white'
 }
 
-class Rooms extends Component {
+class Hallway extends Component {
   constructor() {
     super()
     this.state = {
-      topics: []
+      topics: [],
+      nickname: ''
     }
   }
 
@@ -42,13 +43,34 @@ class Rooms extends Component {
     })
   }
 
+  setNickname() {
+    const url = 'https://randomuser.me/api/'
+
+    const nickname = fetch(url)
+    .then(response => {
+      return response.json()
+    }).then(responseBody => {
+      this.setState({
+        nickname: responseBody.results[0].login.username
+      })
+
+      localStorage.setItem('nickname', this.state.nickname)
+    })
+  }
+
+  getNicknameFromStorage() {
+    return localStorage.getItem('nickname')
+  }
+
   componentWillMount() {
     this.fetchTopics()
+    this.setNickname()
   }
 
   render() {
     return (
       <div className="wrapper">
+        <center><h1>{this.getNicknameFromStorage()}</h1></center>
         <div className="row" style={rooms}>
 
           <div className="col-md-4">
@@ -87,4 +109,4 @@ class Rooms extends Component {
   }
 }
 
-export default Rooms
+export default Hallway

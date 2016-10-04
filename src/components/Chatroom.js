@@ -5,6 +5,8 @@ import Messages from './Messages'
 import MessageForm from './MessageForm'
 import Stage from './Stage'
 
+import Pusher from 'pusher-js'
+
 const chatroomStyle = {
   paddingLeft: '705px',
   paddingTop: '45px',
@@ -56,13 +58,6 @@ class Chatroom extends Component {
   }
 
   sendMessage(message) {
-    this.setState((state) => ({
-      messages: state.messages.concat({
-        sender: 'Jason',
-        content: message
-      })
-    }))
-    
     fetch('http://localhost:8000/api/v1/messages',
     {
       headers: {
@@ -72,7 +67,7 @@ class Chatroom extends Component {
       method: 'POST',
       body: JSON.stringify({
         message: {
-          sender: 'Jason',
+          sender: localStorage.getItem('nickname'),
           content: message,
           room_id: this.room_id
         }
@@ -93,8 +88,26 @@ class Chatroom extends Component {
     })
   }
 
+  subscribeChannel() {
+    this.pusher = new Pusher('4e452dd8187d9d856234');
+    this.chatRoom = this.pusher.subscribe(this.name.replace(' ', '_').toLowerCase());
+  }
+
   componentWillMount() {
     this.fetchMessages()
+    this.subscribeChannel()
+  }
+
+  componentDidMount() {
+    this.chatRoom.bind('message_event', function(message){
+        this.setState((state) => ({
+          messages: state.messages.concat({
+            sender: message.sender,
+            content: message.content,
+            room_id: this.room_id
+          })
+        }))
+    }, this);
   }
 
   render() {

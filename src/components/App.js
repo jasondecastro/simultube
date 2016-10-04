@@ -3,7 +3,7 @@ import '../static/bootstrap.min.css'
 import '../static/hallway.css'
 
 
-import Rooms from './Rooms'
+import Hallway from './Hallway'
 
 class App extends Component {
   constructor() {
@@ -17,7 +17,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Rooms />
+        <Hallway />
       </div>
     )
   }
