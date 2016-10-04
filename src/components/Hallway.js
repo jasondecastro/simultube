@@ -20,9 +20,10 @@ const basicStyle = {
 class Hallway extends Component {
   constructor() {
     super()
+
     this.state = {
       topics: [],
-      nickname: ''
+      nickname: localStorage.getItem('nickname')
     }
   }
 
@@ -50,11 +51,10 @@ class Hallway extends Component {
     .then(response => {
       return response.json()
     }).then(responseBody => {
+      localStorage.setItem('nickname', responseBody.results[0].login.username)
       this.setState({
         nickname: responseBody.results[0].login.username
       })
-
-      localStorage.setItem('nickname', this.state.nickname)
     })
   }
 
@@ -64,13 +64,29 @@ class Hallway extends Component {
 
   componentWillMount() {
     this.fetchTopics()
-    this.setNickname()
+    if (localStorage.getItem('nickname') === null) {
+      this.setNickname()
+    }
+  }
+
+  changeNicknameValue(event) {
+    this.setState({
+      nickname: event.target.value
+    })
+  }
+
+  handleNicknameChange(event) {
+    event.preventDefault();
+    localStorage.setItem('nickname', this.state.nickname)
   }
 
   render() {
     return (
       <div className="wrapper">
-        <center><h1>{this.getNicknameFromStorage()}</h1></center>
+        <form onSubmit={this.handleNicknameChange.bind(this)}>
+          <input value={this.state.nickname} onChange={this.changeNicknameValue.bind(this)}></input>
+        </form>
+        <center><h1>{this.state.nickname}</h1></center>
         <div className="row" style={rooms}>
 
           <div className="col-md-4">
