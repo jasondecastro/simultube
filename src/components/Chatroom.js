@@ -3,10 +3,13 @@ import { Link } from 'react-router'
 
 import Messages from './Messages'
 import MessageForm from './MessageForm'
+import Stage from './Stage'
 
 const chatroomStyle = {
-  paddingLeft: '100px',
-  margin: '0 auto'
+  paddingLeft: '705px',
+  paddingTop: '45px',
+  marginTop: '-600px',
+  float: 'left'
 }
 
 class Chatroom extends Component {
@@ -96,7 +99,8 @@ class Chatroom extends Component {
 
   render() {
     return (
-      <div className="container">
+      <div>
+        <Stage />
         <div className="row col-md-8 col-md-offset-2" style={chatroomStyle}>
           <h1>{this.name.length == 0 ? this.state.name : this.name}</h1>
           <Messages messages={this.state.messages} />
