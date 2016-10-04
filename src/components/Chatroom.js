@@ -13,8 +13,8 @@ class Chatroom extends Component {
   constructor(props) {
     super(props)
   
-    this.name
-    this.room_id
+    this.name = ''
+    this.room_id = 0
 
     switch(props.params.id) {
       case '1':
@@ -42,7 +42,7 @@ class Chatroom extends Component {
         this.room_id = 3
         break
       default:
-        document.location.href = "http://www.urbandictionary.com/define.php?term=dummy"
+        document.location.href = "/undefined.html"
         break
     }
 
