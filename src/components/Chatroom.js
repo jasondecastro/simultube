@@ -8,10 +8,11 @@ import Stage from './Stage'
 import Pusher from 'pusher-js'
 
 const chatroomStyle = {
-  paddingLeft: '705px',
+  paddingLeft: '708px',
   paddingTop: '45px',
   marginTop: '-600px',
-  float: 'left'
+  float: 'right',
+  position: 'absolute'
 }
 
 class Chatroom extends Component {

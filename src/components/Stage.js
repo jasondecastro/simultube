@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 
 const stageStyle = {
-  width: '900px',
+  width: '66%',
   height: '610px',
-  backgroundColor: 'black',
-  float: 'left'
+  backgroundColor: 'black'
 }
 
 class Stage extends Component {
