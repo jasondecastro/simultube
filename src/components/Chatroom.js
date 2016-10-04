@@ -13,25 +13,33 @@ class Chatroom extends Component {
   constructor(props) {
     super(props)
   
-    this.name = ''
+    this.name
+    this.room_id
+
     switch(props.params.id) {
       case '1':
         this.name = 'The Garden'
+        this.room_id = 1
         break
       case '2':
         this.name = 'The Pool'
+        this.room_id = 2
         break
       case '3':
         this.name = 'The Parlor'
+        this.room_id = 3
         break
       case 'the_garden':
         this.name = 'The Garden'
+        this.room_id = 1
         break
       case 'the_pool':
         this.name = 'The Pool'
+        this.room_id = 2
         break
       case 'the_parlor':
         this.name = 'The Parlor'
+        this.room_id = 3
         break
       default:
         document.location.href = "http://www.urbandictionary.com/define.php?term=dummy"
@@ -63,14 +71,14 @@ class Chatroom extends Component {
         message: {
           sender: 'Jason',
           content: message,
-          room_id: '1'
+          room_id: this.room_id
         }
       })
     })
   }
 
   fetchMessages() {
-    const url = 'http://localhost:8000/api/v1/rooms/1'
+    const url = 'http://localhost:8000/api/v1/rooms/' + this.room_id
 
     const messages = fetch(url)
     .then(response => {
