@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom'
 import { Router, Route, browserHistory } from 'react-router'
 
 import App from './components/App'
-import Rooms from './components/Rooms'
 import Chatroom from './components/Chatroom'
 
 ReactDOM.render(
