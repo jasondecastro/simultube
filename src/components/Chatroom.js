@@ -88,14 +88,14 @@ class Chatroom extends Component {
     })
   }
 
-  doWebSocketyStuff() {
+  subscribeChannel() {
     this.pusher = new Pusher('4e452dd8187d9d856234');
     this.chatRoom = this.pusher.subscribe(this.name.replace(' ', '_').toLowerCase());
   }
 
   componentWillMount() {
     this.fetchMessages()
-    this.doWebSocketyStuff()
+    this.subscribeChannel()
   }
 
   componentDidMount() {
