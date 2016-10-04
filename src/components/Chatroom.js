@@ -6,12 +6,11 @@ import MessageForm from './MessageForm'
 import Stage from './Stage'
 
 const chatroomStyle = {
-  width: '460px',
-  paddingLeft: '700px',
+  paddingLeft: '708px',
   paddingTop: '45px',
   marginTop: '-600px',
   float: 'right',
-  position: 'fixed'
+  position: 'absolute'
 }
 
 class Chatroom extends Component {
