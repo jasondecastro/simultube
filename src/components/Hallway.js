@@ -23,14 +23,22 @@ class Hallway extends Component {
 
     this.state = {
       topics: [],
-      nickname: localStorage.getItem('nickname')
+      nickname: sessionStorage.getItem('nickname'),
+      session: !!sessionStorage.jwt
     }
   }
 
   fetchTopics() {
     const url = 'http://localhost:8000/api/v1/rooms'
 
-    const topics = fetch(url)
+    const topics = fetch(url,
+      {
+        method: 'GET',
+        headers: {
+          'AUTHORIZATION': `Bearer ${sessionStorage.jwt}`
+        }
+      }
+    )
     .then(response => {
       return response.json()
     }).then(responseBody => {
@@ -44,17 +52,29 @@ class Hallway extends Component {
     })
   }
 
-  setNickname() {
-    const url = 'https://randomuser.me/api/'
-
-    const nickname = fetch(url)
-    .then(response => {
-      return response.json()
-    }).then(responseBody => {
-      localStorage.setItem('nickname', responseBody.results[0].login.username)
-      this.setState({
-        nickname: responseBody.results[0].login.username
+  initializeUser() {
+    const url = 'http://localhost:8000/api/v1/users/'
+    fetch(url,
+    {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify({
+        //no body?
       })
+    })
+    .then( response => response.json() )
+    .then( responseBody => {
+      let nickname = responseBody.nickname
+      sessionStorage.setItem('jwt', responseBody.jwt)
+      sessionStorage.setItem('nickname', nickname)
+      this.setState({
+        session: !!sessionStorage.jwt,
+        nickname: nickname
+      })
+
     })
   }
 
@@ -64,9 +84,7 @@ class Hallway extends Component {
 
   componentWillMount() {
     this.fetchTopics()
-    if (localStorage.getItem('nickname') === null) {
-      this.setNickname()
-    }
+    this.initializeUser()
   }
 
   changeNicknameValue(event) {
