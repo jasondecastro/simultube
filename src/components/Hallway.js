@@ -83,8 +83,8 @@ class Hallway extends Component {
   }
 
   componentWillMount() {
-    this.fetchTopics()
     this.initializeUser()
+    this.fetchTopics()
   }
 
   changeNicknameValue(event) {
