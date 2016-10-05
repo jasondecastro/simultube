@@ -80,7 +80,6 @@ class Hallway extends Component {
 
   removeUserRoomId() {
     const url = 'http://localhost:8000/api/v1/users/' + sessionStorage.getItem('id')
-    debugger;
     fetch(url,
     {
       headers: {

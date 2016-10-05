@@ -105,7 +105,6 @@ class Chatroom extends Component {
 
   patchUserRoomId() {
     const url = 'http://localhost:8000/api/v1/users/' + sessionStorage.getItem('id')
-    debugger;
     fetch(url,
     {
       headers: {
@@ -123,7 +122,6 @@ class Chatroom extends Component {
     })
     .then( response => response.json() )
     .then( responseBody => {
-      debugger;
       //
       // const newNickname = responseBody.data.attributes.nickname
       //
