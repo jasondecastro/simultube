@@ -112,22 +112,34 @@ class Chatroom extends Component {
         }
       })
     })
-    .then( response => response.json() )
-    .then( responseBody => {
-      //
-      // const newNickname = responseBody.data.attributes.nickname
-      //
-      // sessionStorage.setItem('nickname', newNickname)
-      // this.setState({
-      //   nickname: newNickname
-      // })
-    })
   }
+
+
+  componentWillUnmount() {
+    this.pusher.unsubscribe(this.name.replace(' ', '_').toLowerCase());
+  }
+
 
   componentWillMount() {
     this.fetchMessages()
     this.subscribeChannel()
     this.patchUserRoomId()
+
+    this.chatRoom.bind('join_event', function(user){
+      this.setState((state) => ({
+        users: state.users.concat({
+           nickname: user.user.nickname
+        })
+      }))
+    }, this);
+
+    this.chatRoom.bind('leave_event', function(user){
+      this.setState((state) => ({
+        users: state.users.filter( item => {
+          return item.nickname !== user.user.nickname
+        })
+      }))
+    }, this);
   }
 
   componentDidMount() {
