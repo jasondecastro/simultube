@@ -29,19 +29,20 @@ class Hallway extends Component {
   }
 
   fetchTopics() {
-    const url = 'http://localhost:8000/api/v1/rooms'
+    const url = 'http://localhost:8000/api/v1/topics'
 
-    const topics = fetch(url,
+    fetch(url,
       {
         method: 'GET',
-        headers: {
-          'AUTHORIZATION': `Bearer ${sessionStorage.jwt}`
-        }
+        // headers: {
+        //   'AUTHORIZATION': `Bearer ${sessionStorage.jwt}`
+        // }
       }
     )
     .then(response => {
       return response.json()
-    }).then(responseBody => {
+    })
+    .then(responseBody => {
       const topics = responseBody.data.map(data => {
         return data.attributes.topic
       })
@@ -68,13 +69,14 @@ class Hallway extends Component {
     .then( response => response.json() )
     .then( responseBody => {
       let nickname = responseBody.nickname
-      sessionStorage.setItem('jwt', responseBody.jwt)
+      let jwt = responseBody.jwt
+      sessionStorage.setItem('jwt', jwt)
       sessionStorage.setItem('nickname', nickname)
+
       this.setState({
         session: !!sessionStorage.jwt,
         nickname: nickname
       })
-
     })
   }
 
@@ -83,7 +85,9 @@ class Hallway extends Component {
   }
 
   componentWillMount() {
-    this.initializeUser()
+    // if (sessionStorage.getItem('nickname') === null) {
+      this.initializeUser()
+    // }
     this.fetchTopics()
   }
 
@@ -95,7 +99,7 @@ class Hallway extends Component {
 
   handleNicknameChange(event) {
     event.preventDefault();
-    localStorage.setItem('nickname', this.state.nickname)
+    sessionStorage.setItem('nickname', this.state.nickname)
   }
 
   render() {
