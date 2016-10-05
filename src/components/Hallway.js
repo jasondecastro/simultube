@@ -63,9 +63,10 @@ class Hallway extends Component {
     .then( responseBody => {
       let nickname = responseBody.nickname
       let jwt = responseBody.jwt
+      let id = responseBody.id
       sessionStorage.setItem('jwt', jwt)
       sessionStorage.setItem('nickname', nickname)
-
+      sessionStorage.setItem('id', id)
       this.setState({
         session: !!sessionStorage.jwt,
         nickname: nickname
@@ -92,7 +93,38 @@ class Hallway extends Component {
 
   handleNicknameChange(event) {
     event.preventDefault();
-    sessionStorage.setItem('nickname', this.state.nickname)
+    this.patchNickname()
+    //sessionStorage.setItem('nickname', this.state.nickname)
+  }
+
+  patchNickname() {
+    const url = 'http://localhost:8000/api/v1/users/' + sessionStorage.getItem('id')
+
+    fetch(url,
+    {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'AUTHORIZATION': `Bearer ${sessionStorage.jwt}`
+      },
+      method: 'PATCH',
+      body: JSON.stringify({
+        user: {
+          id: sessionStorage.getItem('id'),
+          nickname: this.state.nickname
+        }
+      })
+    })
+    .then( response => response.json() )
+    .then( responseBody => {
+
+      const newNickname = responseBody.data.attributes.nickname
+
+      sessionStorage.setItem('nickname', newNickname)
+      // this.setState({
+      //   nickname: newNickname
+      // })
+    })
   }
 
   render() {
