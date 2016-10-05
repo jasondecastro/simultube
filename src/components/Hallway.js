@@ -185,7 +185,7 @@ class Hallway extends Component {
                 <p style={basicStyle}>{this.state.topics[0]}</p>
               </center>
             </div>
-            <Link to="/rooms/1"><img src="http://i.imgur.com/uc2UetF.png" style={doorStyle}/></Link>
+            <Link to="/rooms/1"><img src="https://i.imgur.com/uc2UetF.png" style={doorStyle}/></Link>
           </div>
 
           <div className="col-md-4">
@@ -197,7 +197,7 @@ class Hallway extends Component {
                 <p style={basicStyle}>{this.state.topics[1]}</p>
               </center>
             </div>
-           <Link to="/rooms/1"><img src="http://i.imgur.com/uc2UetF.png" style={doorStyle}/></Link>
+           <Link to="/rooms/1"><img src="https://i.imgur.com/uc2UetF.png" style={doorStyle}/></Link>
           </div>
 
           <div className="col-md-4">
@@ -209,7 +209,7 @@ class Hallway extends Component {
                 <p style={basicStyle}>{this.state.topics[2]}</p>
               </center>
             </div>
-            <Link to="/rooms/1"><img src="http://i.imgur.com/uc2UetF.png" style={doorStyle}/></Link>
+            <Link to="/rooms/1"><img src="https://i.imgur.com/uc2UetF.png" style={doorStyle}/></Link>
           </div>
         </div>
       </div>
