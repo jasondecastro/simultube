@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 
 const messageStyle = {
-  width: '400px',
+  maxWidth: '300px',
   overflow: 'scroll',
   height: '300px'
 }

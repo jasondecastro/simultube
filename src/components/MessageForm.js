@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 const inputStyle = {
-  width: '400px'
+  maxWidth: '300px'
 }
 
 class MessageForm extends Component {
@@ -30,7 +30,7 @@ class MessageForm extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit.bind(this)}>
+      <form className="form-control" onSubmit={this.handleSubmit.bind(this)}>
         <input style={inputStyle} value={this.state.message} onChange={this.updateMessage.bind(this)} type="text" className="form-control" />
       </form>
     )
