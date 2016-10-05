@@ -9,7 +9,6 @@ export function fetchTopics() {
       const topics = responseBody.data.map(data => {
         return data.attributes.topic
       })
-
       return topics
     })
 

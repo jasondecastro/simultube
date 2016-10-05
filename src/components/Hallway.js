@@ -40,17 +40,10 @@ class Hallway extends Component {
   constructor(props) {
     super(props)
 
-    this.topics = props.topics
-    debugger
     this.state = {
-      topics: [],
       nickname: sessionStorage.getItem('nickname'),
       session: !!sessionStorage.jwt
     }
-  }
-
-  fetchTopics() {
-    this.props.actions.fetchTopics()
   }
 
   initializeUser() {
@@ -110,7 +103,8 @@ class Hallway extends Component {
     if (sessionStorage.getItem('nickname') === null) {
       this.initializeUser()
     }
-    this.fetchTopics()
+
+    this.props.actions.fetchTopics()
 
     this.patchUserRoomId()
   }
@@ -173,7 +167,7 @@ class Hallway extends Component {
                 <h2 style={basicStyle}>
                   <Link style={basicStyle} to="/rooms/the_garden">The Garden</Link>
                 </h2>
-                <p style={basicStyle}>{this.state.topics[0]}</p>
+                <p style={basicStyle}>{this.props.topics[0]}</p>
               </center>
             </div>
             <Link to="/rooms/1"><img src="http://i.imgur.com/uc2UetF.png" style={doorStyle}/></Link>
@@ -185,7 +179,7 @@ class Hallway extends Component {
                 <h2 style={basicStyle}>
                   <Link style={basicStyle} to="/rooms/the_pool">The Pool</Link>
                 </h2>
-                <p style={basicStyle}>{this.state.topics[1]}</p>
+                <p style={basicStyle}>{this.props.topics[1]}</p>
               </center>
             </div>
            <Link to="/rooms/1"><img src="http://i.imgur.com/uc2UetF.png" style={doorStyle}/></Link>
@@ -197,7 +191,7 @@ class Hallway extends Component {
                 <h2 style={basicStyle}>
                   <Link style={basicStyle} to="/rooms/the_parlor">The Parlor</Link>
                 </h2>
-                <p style={basicStyle}>{this.state.topics[2]}</p>
+                <p style={basicStyle}>{this.props.topics[2]}</p>
               </center>
             </div>
             <Link to="/rooms/1"><img src="http://i.imgur.com/uc2UetF.png" style={doorStyle}/></Link>
@@ -216,7 +210,9 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch) {
-  return {actions: bindActionCreators(actions, dispatch)}
+  return {
+    actions: bindActionCreators(actions, dispatch)
+  }
 }
 
 const componentCreator = connect(mapStateToProps, mapDispatchToProps)
