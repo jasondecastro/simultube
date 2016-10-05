@@ -31,14 +31,7 @@ class Hallway extends Component {
   fetchTopics() {
     const url = 'http://localhost:8000/api/v1/topics'
 
-    fetch(url,
-      {
-        method: 'GET',
-        // headers: {
-        //   'AUTHORIZATION': `Bearer ${sessionStorage.jwt}`
-        // }
-      }
-    )
+    fetch(url)
     .then(response => {
       return response.json()
     })
