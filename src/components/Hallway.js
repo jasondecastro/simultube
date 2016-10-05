@@ -45,7 +45,7 @@ class Hallway extends Component {
   }
 
   fetchTopics() {
-    const url = 'http://localhost:8000/api/v1/topics'
+    const url = 'https://flowers-endpoint.herokuapp.com/api/v1/topics'
 
     fetch(url)
     .then(response => {
@@ -63,7 +63,7 @@ class Hallway extends Component {
   }
 
   initializeUser() {
-    const url = 'http://localhost:8000/api/v1/users/'
+    const url = 'https://flowers-endpoint.herokuapp.com/api/v1/users/'
     return fetch(url,
     {
       headers: {
@@ -99,7 +99,7 @@ class Hallway extends Component {
   }
 
   patchUserRoomId() {
-    const url = 'http://localhost:8000/api/v1/users/' + sessionStorage.getItem('id')
+    const url = 'https://flowers-endpoint.herokuapp.com/api/v1/users/' + sessionStorage.getItem('id')
     fetch(url,
     {
       headers: {
@@ -143,7 +143,7 @@ class Hallway extends Component {
   }
 
   patchNickname() {
-    const url = 'http://localhost:8000/api/v1/users/' + sessionStorage.getItem('id')
+    const url = 'https://flowers-endpoint.herokuapp.com/api/v1/users/' + sessionStorage.getItem('id')
 
     fetch(url,
     {
