@@ -74,13 +74,13 @@ class Hallway extends Component {
   }
 
   getNicknameFromStorage() {
-    return localStorage.getItem('nickname')
+    return sessionStorage.getItem('nickname')
   }
 
   componentWillMount() {
-    // if (sessionStorage.getItem('nickname') === null) {
+    if (sessionStorage.getItem('nickname') === null) {
       this.initializeUser()
-    // }
+    }
     this.fetchTopics()
   }
 
