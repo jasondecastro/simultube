@@ -31,7 +31,7 @@ class MessageForm extends Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit.bind(this)}>
-        <div class="form-group">
+        <div className="form-group">
           <input style={inputStyle} value={this.state.message} onChange={this.updateMessage.bind(this)} type="text" className="form-control" />
         </div>
       </form>
