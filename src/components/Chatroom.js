@@ -112,6 +112,10 @@ class Chatroom extends Component {
         }
       })
     })
+    .then( response => response.json() )
+    .then( responseBody => {
+      sessionStorage.setItem('room_id', this.room_id)
+    })
   }
 
 
@@ -123,7 +127,7 @@ class Chatroom extends Component {
   componentWillMount() {
     this.fetchMessages()
     this.subscribeChannel()
-    this.patchUserRoomId()
+   this.patchUserRoomId()
 
     this.chatRoom.bind('join_event', function(user){
       this.setState((state) => ({

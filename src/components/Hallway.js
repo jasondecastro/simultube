@@ -64,7 +64,7 @@ class Hallway extends Component {
 
   initializeUser() {
     const url = 'https://flowers-endpoint.herokuapp.com/api/v1/users/'
-    fetch(url,
+    return fetch(url,
     {
       headers: {
         'Accept': 'application/json',
@@ -75,7 +75,9 @@ class Hallway extends Component {
         //no body?
       })
     })
-    .then( response => response.json() )
+    .then( response => {
+      return response.json()
+    })
     .then( responseBody => {
       let nickname = responseBody.nickname
       let jwt = responseBody.jwt
@@ -113,15 +115,19 @@ class Hallway extends Component {
         }
       })
     })
+    .then( response => response.json() )
+    .then( responseBody => {
+      sessionStorage.setItem('room_id', 4)
+    })
   }
 
   componentWillMount() {
     if (sessionStorage.getItem('nickname') === null) {
       this.initializeUser()
+    } else {
+      this.patchUserRoomId()
     }
     this.fetchTopics()
-
-    this.patchUserRoomId()
   }
 
   changeNicknameValue(event) {
@@ -160,9 +166,6 @@ class Hallway extends Component {
       const newNickname = responseBody.data.attributes.nickname
 
       sessionStorage.setItem('nickname', newNickname)
-      // this.setState({
-      //   nickname: newNickname
-      // })
     })
   }
 
@@ -197,7 +200,7 @@ class Hallway extends Component {
                 <p style={basicStyle}>{this.state.topics[1]}</p>
               </center>
             </div>
-           <Link to="/rooms/1"><img src="http://i.imgur.com/uc2UetF.png" style={doorStyle}/></Link>
+           <Link to="/rooms/2"><img src="http://i.imgur.com/uc2UetF.png" style={doorStyle}/></Link>
           </div>
 
           <div className="col-md-4">
@@ -209,7 +212,7 @@ class Hallway extends Component {
                 <p style={basicStyle}>{this.state.topics[2]}</p>
               </center>
             </div>
-            <Link to="/rooms/1"><img src="http://i.imgur.com/uc2UetF.png" style={doorStyle}/></Link>
+            <Link to="/rooms/3"><img src="http://i.imgur.com/uc2UetF.png" style={doorStyle}/></Link>
           </div>
         </div>
       </div>
