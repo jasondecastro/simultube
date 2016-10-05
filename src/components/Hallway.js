@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router'
+import { connect } from 'react-redux'
+import * as actions from '../actions'
+import { bindActionCreators } from 'redux'
 
 const rooms = {
   paddingLeft: '25px',
@@ -34,9 +37,11 @@ const textStyle = {
 }
 
 class Hallway extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
 
+    this.topics = props.topics
+    debugger
     this.state = {
       topics: [],
       nickname: sessionStorage.getItem('nickname'),
@@ -45,21 +50,7 @@ class Hallway extends Component {
   }
 
   fetchTopics() {
-    const url = 'http://localhost:8000/api/v1/topics'
-
-    fetch(url)
-    .then(response => {
-      return response.json()
-    })
-    .then(responseBody => {
-      const topics = responseBody.data.map(data => {
-        return data.attributes.topic
-      })
-
-      this.setState({
-        topics: topics
-      })
-    })
+    this.props.actions.fetchTopics()
   }
 
   initializeUser() {
@@ -226,4 +217,15 @@ class Hallway extends Component {
   }
 }
 
-export default Hallway
+function mapStateToProps(state){
+  return {
+    topics: state.topics
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {actions: bindActionCreators(actions, dispatch)}
+}
+
+const componentCreator = connect(mapStateToProps, mapDispatchToProps)
+export default componentCreator(Hallway)
