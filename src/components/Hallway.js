@@ -77,6 +77,8 @@ class Hallway extends Component {
     })
     .then( response => response.json() )
     .then( responseBody => {
+      debugger
+      console.log(responseBody)
       let nickname = responseBody.nickname
       let jwt = responseBody.jwt
       let id = responseBody.id
