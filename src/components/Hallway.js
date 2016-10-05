@@ -45,19 +45,13 @@ class Hallway extends Component {
   }
 
   fetchTopics() {
-    const url = 'http://localhost:8000/api/v1/rooms'
+    const url = 'http://localhost:8000/api/v1/topics'
 
-    const topics = fetch(url,
-      {
-        method: 'GET',
-        headers: {
-          'AUTHORIZATION': `Bearer ${sessionStorage.jwt}`
-        }
-      }
-    )
+    fetch(url)
     .then(response => {
       return response.json()
-    }).then(responseBody => {
+    })
+    .then(responseBody => {
       const topics = responseBody.data.map(data => {
         return data.attributes.topic
       })
@@ -84,23 +78,58 @@ class Hallway extends Component {
     .then( response => response.json() )
     .then( responseBody => {
       let nickname = responseBody.nickname
-      sessionStorage.setItem('jwt', responseBody.jwt)
+      let jwt = responseBody.jwt
+      let id = responseBody.id
+      sessionStorage.setItem('jwt', jwt)
       sessionStorage.setItem('nickname', nickname)
+      sessionStorage.setItem('id', id)
       this.setState({
         session: !!sessionStorage.jwt,
         nickname: nickname
       })
-
     })
   }
 
   getNicknameFromStorage() {
-    return localStorage.getItem('nickname')
+    return sessionStorage.getItem('nickname')
+  }
+
+  removeUserRoomId() {
+    const url = 'http://localhost:8000/api/v1/users/' + sessionStorage.getItem('id')
+    fetch(url,
+    {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'AUTHORIZATION': `Bearer ${sessionStorage.jwt}`
+      },
+      method: 'PATCH',
+      body: JSON.stringify({
+        user: {
+          id: sessionStorage.getItem('id'),
+          room_id: null
+        }
+      })
+    })
+    .then( response => response.json() )
+    .then( responseBody => {
+      //
+      // const newNickname = responseBody.data.attributes.nickname
+      //
+      // sessionStorage.setItem('nickname', newNickname)
+      // this.setState({
+      //   nickname: newNickname
+      // })
+    })
   }
 
   componentWillMount() {
-    this.initializeUser()
+    if (sessionStorage.getItem('nickname') === null) {
+      this.initializeUser()
+    }
     this.fetchTopics()
+
+    this.removeUserRoomId()
   }
 
   changeNicknameValue(event) {
@@ -111,7 +140,38 @@ class Hallway extends Component {
 
   handleNicknameChange(event) {
     event.preventDefault();
-    localStorage.setItem('nickname', this.state.nickname)
+    this.patchNickname()
+    //sessionStorage.setItem('nickname', this.state.nickname)
+  }
+
+  patchNickname() {
+    const url = 'http://localhost:8000/api/v1/users/' + sessionStorage.getItem('id')
+
+    fetch(url,
+    {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'AUTHORIZATION': `Bearer ${sessionStorage.jwt}`
+      },
+      method: 'PATCH',
+      body: JSON.stringify({
+        user: {
+          id: sessionStorage.getItem('id'),
+          nickname: this.state.nickname
+        }
+      })
+    })
+    .then( response => response.json() )
+    .then( responseBody => {
+
+      const newNickname = responseBody.data.attributes.nickname
+
+      sessionStorage.setItem('nickname', newNickname)
+      // this.setState({
+      //   nickname: newNickname
+      // })
+    })
   }
 
   render() {
