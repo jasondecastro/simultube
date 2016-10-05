@@ -112,16 +112,6 @@ class Chatroom extends Component {
         }
       })
     })
-    .then( response => response.json() )
-    .then( responseBody => {
-      //
-      // const newNickname = responseBody.data.attributes.nickname
-      //
-      // sessionStorage.setItem('nickname', newNickname)
-      // this.setState({
-      //   nickname: newNickname
-      // })
-    })
   }
 
   componentWillMount() {
