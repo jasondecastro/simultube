@@ -1,5 +1,5 @@
 export function fetchTopics() {
-  const url = 'http://flowers-endpoint.herokuapp.com/api/v1/topics'
+  const url = 'https://flowers-endpoint.herokuapp.com/api/v1/topics'
 
   const topics = fetch(url)
     .then(response => {
