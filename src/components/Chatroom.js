@@ -8,18 +8,17 @@ import Stage from './Stage'
 import Pusher from 'pusher-js'
 
 const chatroomStyle = {
-  width: '460px',
-  paddingLeft: '700px',
+  paddingLeft: '708px',
   paddingTop: '45px',
   marginTop: '-600px',
   float: 'right',
-  position: 'fixed'
+  position: 'absolute'
 }
 
 class Chatroom extends Component {
   constructor(props) {
     super(props)
-  
+
     this.name = ''
     this.room_id = 0
 
@@ -55,21 +54,23 @@ class Chatroom extends Component {
 
    this.state = {
       topic: 'banana',
-      messages: []
+      messages: [],
+      users: []
     }
   }
 
   sendMessage(message) {
     fetch('http://localhost:8000/api/v1/messages',
     {
+      method: 'POST',
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'AUTHORIZATION': `Bearer ${sessionStorage.jwt}`
       },
-      method: 'POST',
       body: JSON.stringify({
         message: {
-          sender: localStorage.getItem('nickname'),
+          sender: sessionStorage.getItem('nickname'),
           content: message,
           room_id: this.room_id
         }
@@ -80,12 +81,19 @@ class Chatroom extends Component {
   fetchMessages() {
     const url = 'http://localhost:8000/api/v1/rooms/' + this.room_id
 
-    const messages = fetch(url)
+    const messages = fetch(url,
+    {
+      method: 'GET',
+      headers: {
+        'AUTHORIZATION': `Bearer ${sessionStorage.jwt}`
+      }
+    })
     .then(response => {
       return response.json()
     }).then(responseBody => {
         this.setState({
-          messages: responseBody.data.attributes.messages
+          messages: responseBody.data.attributes.messages,
+          users: responseBody.data.attributes.users
         })
     })
   }
@@ -116,6 +124,11 @@ class Chatroom extends Component {
     return (
       <div>
         <Stage />
+        <div>
+          {this.state.users.map( (user) => {
+            return <p>{user.nickname}</p>
+          })}
+        </div>
         <div className="row col-md-8 col-md-offset-2" style={chatroomStyle}>
           <h1>{this.name.length == 0 ? this.state.name : this.name}</h1>
           <Messages messages={this.state.messages} />
