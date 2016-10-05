@@ -2,9 +2,15 @@ import React, { Component } from 'react'
 import { Link } from 'react-router'
 
 const rooms = {
-  margin: '0 auto',
-  paddingLeft: '15px',
-  paddingTop: '100px'
+  paddingLeft: '25px',
+  position: 'absolute',
+  marginLeft: '70px',
+  bottom: '0'
+}
+
+const formStyle = {
+  marginTop: '45px',
+  marginLeft: '80px'
 }
 
 const doorStyle = {
@@ -14,7 +20,17 @@ const doorStyle = {
 }
 
 const basicStyle = {
-  color: 'white'
+  color: 'black'
+}
+
+const inputStyle = {
+  width: '250px',
+  height: '50px',
+  fontSize: '24px'
+}
+
+const textStyle = {
+  marginLeft: '56px'
 }
 
 class Hallway extends Component {
@@ -101,40 +117,47 @@ class Hallway extends Component {
   render() {
     return (
       <div className="wrapper">
-        <form onSubmit={this.handleNicknameChange.bind(this)}>
-          <input value={this.state.nickname} onChange={this.changeNicknameValue.bind(this)}></input>
-        </form>
-        <center><h1>{this.state.nickname}</h1></center>
+      <center>
+          <form style={formStyle} onSubmit={this.handleNicknameChange.bind(this)}>
+            <input className="form-control" style={inputStyle} value={this.state.nickname} onChange={this.changeNicknameValue.bind(this)}></input>
+          </form>
+        </center>
         <div className="row" style={rooms}>
 
           <div className="col-md-4">
-            <center>
-              <h2 style={basicStyle}>
-                <Link style={basicStyle} to="/rooms/the_garden">The Garden</Link>
-              </h2>
-              <p style={basicStyle}>{this.state.topics[0]}</p>
-            </center>
-            <Link to="/rooms/1"><img src="http://www.crdoors.net/wp-content/uploads/2015/08/door.png" style={doorStyle}/></Link>
+            <div style={textStyle}>
+              <center>
+                <h2 style={basicStyle}>
+                  <Link style={basicStyle} to="/rooms/the_garden">The Garden</Link>
+                </h2>
+                <p style={basicStyle}>{this.state.topics[0]}</p>
+              </center>
+            </div>
+            <Link to="/rooms/1"><img src="http://i.imgur.com/uc2UetF.png" style={doorStyle}/></Link>
           </div>
 
           <div className="col-md-4">
-            <center>
-              <h2 style={basicStyle}>
-                <Link style={basicStyle} to="/rooms/the_pool">The Pool</Link>
-              </h2>
-              <p style={basicStyle}>{this.state.topics[1]}</p>
-            </center>
-           <Link to="/rooms/1"><img src="http://www.crdoors.net/wp-content/uploads/2015/08/door.png" style={doorStyle}/></Link>
+            <div style={textStyle}>
+              <center>
+                <h2 style={basicStyle}>
+                  <Link style={basicStyle} to="/rooms/the_pool">The Pool</Link>
+                </h2>
+                <p style={basicStyle}>{this.state.topics[1]}</p>
+              </center>
+            </div>
+           <Link to="/rooms/1"><img src="http://i.imgur.com/uc2UetF.png" style={doorStyle}/></Link>
           </div>
 
           <div className="col-md-4">
-            <center>
-              <h2 style={basicStyle}>
-                <Link style={basicStyle} to="/rooms/the_parlor">The Parlor</Link>
-              </h2>
-              <p style={basicStyle}>{this.state.topics[2]}</p>
-            </center>
-            <Link to="/rooms/1"><img src="http://www.crdoors.net/wp-content/uploads/2015/08/door.png" style={doorStyle}/></Link>
+            <div style={textStyle}>
+              <center>
+                <h2 style={basicStyle}>
+                  <Link style={basicStyle} to="/rooms/the_parlor">The Parlor</Link>
+                </h2>
+                <p style={basicStyle}>{this.state.topics[2]}</p>
+              </center>
+            </div>
+            <Link to="/rooms/1"><img src="http://i.imgur.com/uc2UetF.png" style={doorStyle}/></Link>
           </div>
         </div>
       </div>

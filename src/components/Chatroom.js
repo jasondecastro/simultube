@@ -7,14 +7,6 @@ import Stage from './Stage'
 
 import Pusher from 'pusher-js'
 
-const chatroomStyle = {
-  paddingLeft: '708px',
-  paddingTop: '45px',
-  marginTop: '-600px',
-  float: 'right',
-  position: 'absolute'
-}
-
 class Chatroom extends Component {
   constructor(props) {
     super(props)
@@ -122,14 +114,11 @@ class Chatroom extends Component {
 
   render() {
     return (
-      <div>
-        <Stage />
-        <div>
-          {this.state.users.map( (user) => {
-            return <p>{user.nickname}</p>
-          })}
+      <div className="row">
+        <div className="col-sm-9">
+          <Stage users={this.state.users} />
         </div>
-        <div className="row col-md-8 col-md-offset-2" style={chatroomStyle}>
+        <div className="col-sm-3-offset" className="chatBoxStyle">
           <h1>{this.name.length == 0 ? this.state.name : this.name}</h1>
           <Messages messages={this.state.messages} />
           <MessageForm sendMessage={this.sendMessage.bind(this)} />
