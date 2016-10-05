@@ -80,9 +80,11 @@ class Hallway extends Component {
       let nickname = responseBody.nickname
       let jwt = responseBody.jwt
       let id = responseBody.id
+      let room_id = responseBody.room_id
       sessionStorage.setItem('jwt', jwt)
       sessionStorage.setItem('nickname', nickname)
       sessionStorage.setItem('id', id)
+      sessionStorage.setItem('room_id', room_id)
       this.setState({
         session: !!sessionStorage.jwt,
         nickname: nickname
@@ -94,7 +96,7 @@ class Hallway extends Component {
     return sessionStorage.getItem('nickname')
   }
 
-  removeUserRoomId() {
+  patchUserRoomId() {
     const url = 'http://localhost:8000/api/v1/users/' + sessionStorage.getItem('id')
     fetch(url,
     {
@@ -107,19 +109,9 @@ class Hallway extends Component {
       body: JSON.stringify({
         user: {
           id: sessionStorage.getItem('id'),
-          room_id: null
+          room_id: 4
         }
       })
-    })
-    .then( response => response.json() )
-    .then( responseBody => {
-      //
-      // const newNickname = responseBody.data.attributes.nickname
-      //
-      // sessionStorage.setItem('nickname', newNickname)
-      // this.setState({
-      //   nickname: newNickname
-      // })
     })
   }
 
@@ -129,7 +121,7 @@ class Hallway extends Component {
     }
     this.fetchTopics()
 
-    this.removeUserRoomId()
+    this.patchUserRoomId()
   }
 
   changeNicknameValue(event) {
