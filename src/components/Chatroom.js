@@ -11,7 +11,10 @@ const chatroomStyle = {
   paddingLeft: '708px',
   paddingTop: '45px',
   marginTop: '-600px',
-  float: 'right',
+  float: 'left',
+  minWidth: '300px',
+  width: '350px',
+  maxWidth: '400px',
   position: 'absolute'
 }
 
