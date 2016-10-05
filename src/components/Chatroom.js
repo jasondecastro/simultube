@@ -103,9 +103,41 @@ class Chatroom extends Component {
     this.chatRoom = this.pusher.subscribe(this.name.replace(' ', '_').toLowerCase());
   }
 
+  patchUserRoomId() {
+    const url = 'http://localhost:8000/api/v1/users/' + sessionStorage.getItem('id')
+    debugger;
+    fetch(url,
+    {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'AUTHORIZATION': `Bearer ${sessionStorage.jwt}`
+      },
+      method: 'PATCH',
+      body: JSON.stringify({
+        user: {
+          id: sessionStorage.getItem('id'),
+          room_id: this.room_id
+        }
+      })
+    })
+    .then( response => response.json() )
+    .then( responseBody => {
+      debugger;
+      //
+      // const newNickname = responseBody.data.attributes.nickname
+      //
+      // sessionStorage.setItem('nickname', newNickname)
+      // this.setState({
+      //   nickname: newNickname
+      // })
+    })
+  }
+
   componentWillMount() {
     this.fetchMessages()
     this.subscribeChannel()
+    this.patchUserRoomId()
   }
 
   componentDidMount() {
