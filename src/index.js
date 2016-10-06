@@ -13,7 +13,6 @@ import rootReducer from './reducers'
 import { fetchTopics } from './actions'
 
 const store = createStore(rootReducer, applyMiddleware(ReduxPromise))
-store.dispatch(fetchTopics())
 
 ReactDOM.render(
   <Provider store={store}>
