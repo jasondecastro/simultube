@@ -62,7 +62,9 @@ class Hallway extends Component {
         //no body?
       })
     })
-    .then( response => response.json() )
+    .then( response => {
+      return response.json()
+    })
     .then( responseBody => {
       let nickname = responseBody.nickname
       let jwt = responseBody.jwt
@@ -99,6 +101,10 @@ class Hallway extends Component {
           room_id: 4
         }
       })
+    })
+    .then( response => response.json() )
+    .then( responseBody => {
+      sessionStorage.setItem('room_id', 4)
     })
   }
 
@@ -199,7 +205,7 @@ class Hallway extends Component {
                 <p style={basicStyle}>{this.props.topics[0]}</p>
               </center>
             </div>
-            <Link to="/rooms/1"><img src="http://i.imgur.com/uc2UetF.png" style={doorStyle}/></Link>
+            <Link to="/rooms/1"><img src="https://i.imgur.com/uc2UetF.png" style={doorStyle}/></Link>
           </div>
 
           <div className="col-md-4">

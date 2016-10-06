@@ -54,7 +54,7 @@ class Chatroom extends Component {
   }
 
   sendMessage(message) {
-    fetch('http://localhost:8000/api/v1/messages',
+    fetch('https://flowers-endpoint.herokuapp.com/api/v1/messages',
     {
       method: 'POST',
       headers: {
@@ -72,13 +72,8 @@ class Chatroom extends Component {
     })
   }
 
-  // subscribeChannel() {
-  //   this.pusher = new Pusher('4e452dd8187d9d856234');
-  //   this.chatRoom = this.pusher.subscribe(this.name.replace(' ', '_').toLowerCase());
-  // }
-
   patchUserRoomId() {
-    const url = 'http://localhost:8000/api/v1/users/' + sessionStorage.getItem('id')
+    const url = 'https://flowers-endpoint.herokuapp.com/api/v1/users/' + sessionStorage.getItem('id')
     fetch(url,
     {
       headers: {
@@ -94,6 +89,10 @@ class Chatroom extends Component {
         }
       })
     })
+    .then( response => response.json() )
+    .then( responseBody => {
+      sessionStorage.setItem('room_id', this.room_id)
+    })
   }
 
 
@@ -103,12 +102,18 @@ class Chatroom extends Component {
 
 
   componentWillMount() {
+<<<<<<< HEAD
     const room_id = document.location.href.split("/")[document.location.href.split("/").length - 1]
 
     // this.props.actions.fetchUsers(room_id)
 
     // this.subscribeChannel()
     this.patchUserRoomId()
+=======
+    this.fetchMessages()
+    this.subscribeChannel()
+   this.patchUserRoomId()
+>>>>>>> master
 
     // this.chatRoom.bind('join_event', function(user){
     //   this.setState((state) => ({

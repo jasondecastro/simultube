@@ -9,11 +9,10 @@ export function fetchTopics() {
       const topics = responseBody.data.map(data => {
         return data.attributes.topic
       })
+
       return topics
     })
 
-  // topics = ["topic1", "topic2"]
-  
   return {
     type: 'FETCH_TOPICS',
     payload: topics
