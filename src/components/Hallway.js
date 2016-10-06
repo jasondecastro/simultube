@@ -1,5 +1,11 @@
 import React, { Component } from 'react'
+
 import { Link } from 'react-router'
+import { connect } from 'react-redux'
+import * as actions from '../actions'
+import { bindActionCreators } from 'redux'
+
+import Pusher from 'pusher-js'
 
 const rooms = {
   paddingLeft: '25px',
@@ -34,36 +40,17 @@ const textStyle = {
 }
 
 class Hallway extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
 
     this.state = {
-      topics: [],
       nickname: sessionStorage.getItem('nickname'),
       session: !!sessionStorage.jwt
     }
   }
 
-  fetchTopics() {
-    const url = 'https://flowers-endpoint.herokuapp.com/api/v1/topics'
-
-    fetch(url)
-    .then(response => {
-      return response.json()
-    })
-    .then(responseBody => {
-      const topics = responseBody.data.map(data => {
-        return data.attributes.topic
-      })
-
-      this.setState({
-        topics: topics
-      })
-    })
-  }
-
   initializeUser() {
-    const url = 'https://flowers-endpoint.herokuapp.com/api/v1/users/'
+    const url = 'http://localhost:8000/api/v1/users/'
     return fetch(url,
     {
       headers: {
@@ -98,8 +85,8 @@ class Hallway extends Component {
     return sessionStorage.getItem('nickname')
   }
 
-  patchUserRoomId() {
-    const url = 'https://flowers-endpoint.herokuapp.com/api/v1/users/' + sessionStorage.getItem('id')
+   patchUserRoomToHallway() {
+    const url = 'http://localhost:8000/api/v1/users/' + sessionStorage.getItem('id')
     fetch(url,
     {
       headers: {
@@ -124,10 +111,18 @@ class Hallway extends Component {
   componentWillMount() {
     if (sessionStorage.getItem('nickname') === null) {
       this.initializeUser()
+      .then( () => {
+        this.props.actions.fetchMessages()
+        this.props.actions.fetchUsers()
+      })
+      .then( () => {
+        this.subscribeChannel()
+        this.bindPushEvents()
+      })
     } else {
-      this.patchUserRoomId()
+      this.patchUserRoomToHallway()
     }
-    this.fetchTopics()
+    this.props.actions.fetchTopics()
   }
 
   changeNicknameValue(event) {
@@ -139,11 +134,10 @@ class Hallway extends Component {
   handleNicknameChange(event) {
     event.preventDefault();
     this.patchNickname()
-    //sessionStorage.setItem('nickname', this.state.nickname)
   }
 
   patchNickname() {
-    const url = 'https://flowers-endpoint.herokuapp.com/api/v1/users/' + sessionStorage.getItem('id')
+    const url = 'http://localhost:8000/api/v1/users/' + sessionStorage.getItem('id')
 
     fetch(url,
     {
@@ -169,6 +163,29 @@ class Hallway extends Component {
     })
   }
 
+  subscribeChannel() {
+    this.pusher = new Pusher('4e452dd8187d9d856234');
+    this.mainSocketChannel = this.pusher.subscribe("flowers");
+  }
+
+  bindPushEvents() {
+    this.mainSocketChannel.bind('message_event', function(message){
+      this.props.actions.newMessage(message.data)
+    }, this);
+
+    this.mainSocketChannel.bind('new_user_event', function(user){
+      this.props.actions.newUser(user.data)
+    }, this);
+
+    this.mainSocketChannel.bind('user_change_event', function(user){
+      this.props.actions.changeUser(user.data)
+    }, this);
+  }
+
+  componentDidMount() {
+
+  }
+
   render() {
     return (
       <div className="wrapper">
@@ -183,21 +200,21 @@ class Hallway extends Component {
             <div style={textStyle}>
               <center>
                 <h2 style={basicStyle}>
-                  <Link style={basicStyle} to="/rooms/the_garden">The Garden</Link>
+                  <Link style={basicStyle} to="/rooms/1">The Garden</Link>
                 </h2>
-                <p style={basicStyle}>{this.state.topics[0]}</p>
+                <p style={basicStyle}>{this.props.topics[0]}</p>
               </center>
             </div>
-            <Link to="/rooms/1"><img src="http://i.imgur.com/uc2UetF.png" style={doorStyle}/></Link>
+            <Link to="/rooms/1"><img src="https://i.imgur.com/uc2UetF.png" style={doorStyle}/></Link>
           </div>
 
           <div className="col-md-4">
             <div style={textStyle}>
               <center>
                 <h2 style={basicStyle}>
-                  <Link style={basicStyle} to="/rooms/the_pool">The Pool</Link>
+                  <Link style={basicStyle} to="/rooms/2">The Pool</Link>
                 </h2>
-                <p style={basicStyle}>{this.state.topics[1]}</p>
+                <p style={basicStyle}>{this.props.topics[1]}</p>
               </center>
             </div>
            <Link to="/rooms/2"><img src="http://i.imgur.com/uc2UetF.png" style={doorStyle}/></Link>
@@ -207,9 +224,9 @@ class Hallway extends Component {
             <div style={textStyle}>
               <center>
                 <h2 style={basicStyle}>
-                  <Link style={basicStyle} to="/rooms/the_parlor">The Parlor</Link>
+                  <Link style={basicStyle} to="/rooms/3">The Parlor</Link>
                 </h2>
-                <p style={basicStyle}>{this.state.topics[2]}</p>
+                <p style={basicStyle}>{this.props.topics[2]}</p>
               </center>
             </div>
             <Link to="/rooms/3"><img src="http://i.imgur.com/uc2UetF.png" style={doorStyle}/></Link>
@@ -221,4 +238,19 @@ class Hallway extends Component {
   }
 }
 
-export default Hallway
+function mapStateToProps(state){
+  return {
+    topics: state.topics,
+    messages: state.messages,
+    users: state.users
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(actions, dispatch)
+  }
+}
+
+const componentCreator = connect(mapStateToProps, mapDispatchToProps)
+export default componentCreator(Hallway)

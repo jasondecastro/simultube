@@ -5,6 +5,10 @@ import Messages from './Messages'
 import MessageForm from './MessageForm'
 import Stage from './Stage'
 
+import { connect } from 'react-redux'
+import * as actions from '../actions'
+import { bindActionCreators } from 'redux'
+
 import Pusher from 'pusher-js'
 
 class Chatroom extends Component {
@@ -45,8 +49,6 @@ class Chatroom extends Component {
     }
 
    this.state = {
-      topic: 'banana',
-      messages: [],
       users: []
     }
   }
@@ -68,31 +70,6 @@ class Chatroom extends Component {
         }
       })
     })
-  }
-
-  fetchMessages() {
-    const url = 'https://flowers-endpoint.herokuapp.com/api/v1/rooms/' + this.room_id
-
-    const messages = fetch(url,
-    {
-      method: 'GET',
-      headers: {
-        'AUTHORIZATION': `Bearer ${sessionStorage.jwt}`
-      }
-    })
-    .then(response => {
-      return response.json()
-    }).then(responseBody => {
-        this.setState({
-          messages: responseBody.data.attributes.messages,
-          users: responseBody.data.attributes.users
-        })
-    })
-  }
-
-  subscribeChannel() {
-    this.pusher = new Pusher('4e452dd8187d9d856234');
-    this.chatRoom = this.pusher.subscribe(this.name.replace(' ', '_').toLowerCase());
   }
 
   patchUserRoomId() {
@@ -119,54 +96,70 @@ class Chatroom extends Component {
   }
 
 
-  componentWillUnmount() {
-    this.pusher.unsubscribe(this.name.replace(' ', '_').toLowerCase());
-  }
+  // componentWillUnmount() {
+  //   this.pusher.unsubscribe(this.name.replace(' ', '_').toLowerCase());
+  // }
 
 
   componentWillMount() {
+<<<<<<< HEAD
+    const room_id = document.location.href.split("/")[document.location.href.split("/").length - 1]
+
+    // this.props.actions.fetchUsers(room_id)
+
+    // this.subscribeChannel()
+    this.patchUserRoomId()
+=======
     this.fetchMessages()
     this.subscribeChannel()
    this.patchUserRoomId()
+>>>>>>> master
 
-    this.chatRoom.bind('join_event', function(user){
-      this.setState((state) => ({
-        users: state.users.concat({
-           nickname: user.user.nickname
-        })
-      }))
-    }, this);
+    // this.chatRoom.bind('join_event', function(user){
+    //   this.setState((state) => ({
+    //     users: state.users.concat({
+    //        nickname: user.user.nickname
+    //     })
+    //   }))
+    // }, this);
 
-    this.chatRoom.bind('leave_event', function(user){
-      this.setState((state) => ({
-        users: state.users.filter( item => {
-          return item.nickname !== user.user.nickname
-        })
-      }))
-    }, this);
+    // this.chatRoom.bind('leave_event', function(user){
+    //   this.setState((state) => ({
+    //     users: state.users.filter( item => {
+    //       return item.nickname !== user.user.nickname
+    //     })
+    //   }))
+    // }, this);
   }
 
-  componentDidMount() {
-    this.chatRoom.bind('message_event', function(message){
-        this.setState((state) => ({
-          messages: state.messages.concat({
-            sender: message.sender,
-            content: message.content,
-            room_id: this.room_id
-          })
-        }))
-    }, this);
+
+  getRoomId() {
+    return document.location.href.split("/")[document.location.href.split("/").length - 1]
+  }
+
+  filterMessages(room_id) {
+    const messagesForRoom = this.props.messages.filter(el => {
+      return el.attributes["room-id"] === parseInt(room_id)
+    })
+    return messagesForRoom 
+  }
+
+  filterUsers(room_id) {
+    const usersForRoom = this.props.users.filter(el => {
+      return el.attributes["room-id"] === parseInt(room_id)
+    })
+    return usersForRoom 
   }
 
   render() {
     return (
       <div className="row">
         <div className="col-sm-9">
-          <Stage users={this.state.users} />
+          <Stage users={this.filterUsers(this.getRoomId())} />
         </div>
         <div className="col-sm-3-offset" className="chatBoxStyle">
           <h1>{this.name.length == 0 ? this.state.name : this.name}</h1>
-          <Messages messages={this.state.messages} />
+          <Messages messages={this.filterMessages(this.getRoomId())} />
           <MessageForm sendMessage={this.sendMessage.bind(this)} />
           <h3><Link to="/">Leave</Link></h3>
         </div>
@@ -175,4 +168,18 @@ class Chatroom extends Component {
   }
 }
 
-export default Chatroom
+function mapStateToProps(state) {
+  return {
+    messages: state.messages,
+    users: state.users
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(actions, dispatch)
+  }
+}
+
+const componentCreator = connect(mapStateToProps, mapDispatchToProps)
+export default componentCreator(Chatroom)
