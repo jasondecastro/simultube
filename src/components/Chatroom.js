@@ -54,7 +54,7 @@ class Chatroom extends Component {
   }
 
   sendMessage(message) {
-    fetch('https://flowers-endpoint.herokuapp.com/api/v1/messages',
+    fetch('http://localhost:8000/api/v1/messages',
     {
       method: 'POST',
       headers: {
@@ -73,7 +73,7 @@ class Chatroom extends Component {
   }
 
   patchUserRoomId() {
-    const url = 'https://flowers-endpoint.herokuapp.com/api/v1/users/' + sessionStorage.getItem('id')
+    const url = 'http://localhost:8000/api/v1/users/' + sessionStorage.getItem('id')
     fetch(url,
     {
       headers: {

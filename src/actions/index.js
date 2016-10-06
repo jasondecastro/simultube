@@ -82,3 +82,10 @@ export function changeUser(changedUserObject) {
     payload: changedUserObject
   }
 }
+
+export function destroyUser(userToDestroyID) {
+  return {
+    type: 'DESTROY_USER',
+    payload: userToDestroyID
+  }
+}

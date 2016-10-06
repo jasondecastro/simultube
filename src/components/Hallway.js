@@ -180,14 +180,21 @@ class Hallway extends Component {
     this.mainSocketChannel.bind('user_change_event', function(user){
       this.props.actions.changeUser(user.data)
     }, this);
+
+    this.mainSocketChannel.bind('user_destroy_event', function(userToDelete){
+      this.props.actions.destroyUser(userToDelete.id)
+    }, this);
   }
 
   componentDidMount() {
     window.addEventListener("beforeunload", (ev) => 
       {  
-          ev.preventDefault();
-          return ev.returnValue = 'Are you sure you want to close?';
-      });
+          ev.preventDefault()
+          fetch('http://localhost:8000/api/v1/users/' + sessionStorage.getItem('id'),
+            {
+              method: 'DELETE'
+            })
+      })
   }
 
   render() {
