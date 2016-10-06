@@ -72,10 +72,10 @@ class Chatroom extends Component {
     })
   }
 
-  subscribeChannel() {
-    this.pusher = new Pusher('4e452dd8187d9d856234');
-    this.chatRoom = this.pusher.subscribe(this.name.replace(' ', '_').toLowerCase());
-  }
+  // subscribeChannel() {
+  //   this.pusher = new Pusher('4e452dd8187d9d856234');
+  //   this.chatRoom = this.pusher.subscribe(this.name.replace(' ', '_').toLowerCase());
+  // }
 
   patchUserRoomId() {
     const url = 'http://localhost:8000/api/v1/users/' + sessionStorage.getItem('id')
@@ -97,34 +97,34 @@ class Chatroom extends Component {
   }
 
 
-  componentWillUnmount() {
-    this.pusher.unsubscribe(this.name.replace(' ', '_').toLowerCase());
-  }
+  // componentWillUnmount() {
+  //   this.pusher.unsubscribe(this.name.replace(' ', '_').toLowerCase());
+  // }
 
 
   componentWillMount() {
     const room_id = document.location.href.split("/")[document.location.href.split("/").length - 1]
 
-    this.props.actions.fetchUsers(room_id)
+    // this.props.actions.fetchUsers(room_id)
 
-    this.subscribeChannel()
+    // this.subscribeChannel()
     this.patchUserRoomId()
 
-    this.chatRoom.bind('join_event', function(user){
-      this.setState((state) => ({
-        users: state.users.concat({
-           nickname: user.user.nickname
-        })
-      }))
-    }, this);
+    // this.chatRoom.bind('join_event', function(user){
+    //   this.setState((state) => ({
+    //     users: state.users.concat({
+    //        nickname: user.user.nickname
+    //     })
+    //   }))
+    // }, this);
 
-    this.chatRoom.bind('leave_event', function(user){
-      this.setState((state) => ({
-        users: state.users.filter( item => {
-          return item.nickname !== user.user.nickname
-        })
-      }))
-    }, this);
+    // this.chatRoom.bind('leave_event', function(user){
+    //   this.setState((state) => ({
+    //     users: state.users.filter( item => {
+    //       return item.nickname !== user.user.nickname
+    //     })
+    //   }))
+    // }, this);
   }
 
 

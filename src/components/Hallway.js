@@ -83,12 +83,38 @@ class Hallway extends Component {
     return sessionStorage.getItem('nickname')
   }
 
+   patchUserRoomToHallway() {
+    const url = 'http://localhost:8000/api/v1/users/' + sessionStorage.getItem('id')
+    fetch(url,
+    {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'AUTHORIZATION': `Bearer ${sessionStorage.jwt}`
+      },
+      method: 'PATCH',
+      body: JSON.stringify({
+        user: {
+          id: sessionStorage.getItem('id'),
+          room_id: 4
+        }
+      })
+    })
+  }
+
   componentWillMount() {
     if (sessionStorage.getItem('nickname') === null) {
-      this.initializeUser().then( () => {
+      this.initializeUser()
+      .then( () => {
         this.props.actions.fetchMessages()
         this.props.actions.fetchUsers()
       })
+      .then( () => {
+        this.subscribeChannel()
+        this.bindPushEvents()
+      })
+    } else {
+      this.patchUserRoomToHallway()
     }
     this.props.actions.fetchTopics()
   }
@@ -151,9 +177,7 @@ class Hallway extends Component {
   }
 
   componentDidMount() {
-    this.subscribeChannel()
 
-    this.bindPushEvents()
   }
 
   render() {
