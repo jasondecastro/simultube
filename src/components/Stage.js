@@ -49,7 +49,7 @@ class Stage extends Component {
           {this.props.users.map(user => {
               return (
                 <div>
-                  <h2 style={nameStyle}>{user.nickname}</h2>
+                  <h2 style={nameStyle}>{user.attributes.nickname}</h2>
                   <Character position={this.state.position} style={this.characterStyle.bind(this)} />
                 </div>
               )
