@@ -18,7 +18,7 @@ class Messages extends Component {
       <div className="panel panel-default" style={messageStyle}>
         <div className="panel-body" id="messages">
           { this.props.messages.map((payload, index)=> {
-            return <p key={index}><strong>{payload.sender}:</strong> {payload.content}</p>
+            return <p key={index}><strong>{payload.attributes.sender}:</strong> {payload.attributes.content}</p>
           })}
         </div>
       </div>
