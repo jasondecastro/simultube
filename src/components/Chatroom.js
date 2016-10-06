@@ -102,34 +102,8 @@ class Chatroom extends Component {
 
 
   componentWillMount() {
-<<<<<<< HEAD
     const room_id = document.location.href.split("/")[document.location.href.split("/").length - 1]
-
-    // this.props.actions.fetchUsers(room_id)
-
-    // this.subscribeChannel()
     this.patchUserRoomId()
-=======
-    this.fetchMessages()
-    this.subscribeChannel()
-   this.patchUserRoomId()
->>>>>>> master
-
-    // this.chatRoom.bind('join_event', function(user){
-    //   this.setState((state) => ({
-    //     users: state.users.concat({
-    //        nickname: user.user.nickname
-    //     })
-    //   }))
-    // }, this);
-
-    // this.chatRoom.bind('leave_event', function(user){
-    //   this.setState((state) => ({
-    //     users: state.users.filter( item => {
-    //       return item.nickname !== user.user.nickname
-    //     })
-    //   }))
-    // }, this);
   }
 
 
