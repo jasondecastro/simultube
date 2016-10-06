@@ -183,7 +183,11 @@ class Hallway extends Component {
   }
 
   componentDidMount() {
-
+    window.addEventListener("beforeunload", (ev) => 
+      {  
+          ev.preventDefault();
+          return ev.returnValue = 'Are you sure you want to close?';
+      });
   }
 
   render() {
