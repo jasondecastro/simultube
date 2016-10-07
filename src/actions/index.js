@@ -74,7 +74,6 @@ export function fetchVideos() {
   .then(response => {
     return response.json()
   }).then(responseBody => {
-    debugger
     return responseBody.data
   })
 
