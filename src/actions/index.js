@@ -69,6 +69,13 @@ export function newMessage(newMessageObject) {
   }
 }
 
+export function newVideo(newVideoObject) {
+  return {
+    type: 'NEW_VIDEO',
+    payload: newVideoObject
+  }
+}
+
 export function newUser(newUserObject) {
   return {
     type: 'NEW_USER',

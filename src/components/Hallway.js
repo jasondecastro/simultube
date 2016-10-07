@@ -112,7 +112,7 @@ class Hallway extends Component {
     if (sessionStorage.getItem('nickname') === null) {
       this.initializeUser()
       .then( () => {
-        this.props.actions.fetchMessages()
+        //this.props.actions.fetchMessages()
         this.props.actions.fetchUsers()
       })
       .then( () => {
@@ -170,7 +170,15 @@ class Hallway extends Component {
 
   bindPushEvents() {
     this.mainSocketChannel.bind('message_event', function(message){
-      this.props.actions.newMessage(message.data)
+
+      if (message.data.type === "texts") {
+        this.props.actions.newMessage(message.data)
+      }
+
+      if (message.data.type === "videos") {
+        this.props.actions.newVideo(message.data)
+      }
+
     }, this);
 
     this.mainSocketChannel.bind('new_user_event', function(user){
@@ -187,14 +195,14 @@ class Hallway extends Component {
   }
 
   componentDidMount() {
-    window.addEventListener("beforeunload", (ev) => 
-      {  
-          ev.preventDefault()
-          fetch('http://localhost:8000/api/v1/users/' + sessionStorage.getItem('id'),
-            {
-              method: 'DELETE'
-            })
+    window.addEventListener("beforeunload", (ev) =>
+    {
+      ev.preventDefault()
+      fetch('http://localhost:8000/api/v1/users/' + sessionStorage.getItem('id'),
+      {
+        method: 'DELETE'
       })
+    })
   }
 
   render() {
@@ -253,7 +261,8 @@ function mapStateToProps(state){
   return {
     topics: state.topics,
     messages: state.messages,
-    users: state.users
+    users: state.users,
+    videos: state.videos
   }
 }
 
