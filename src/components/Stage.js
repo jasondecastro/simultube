@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
 import Character from './Character'
 
+import { connect } from 'react-redux'
+import * as actions from '../actions'
+import { bindActionCreators } from 'redux'
+
 const nameStyle = {
   color: 'white'
 }
@@ -48,7 +52,10 @@ class Stage extends Component {
   componentDidMount() {
     document.getElementById('stage').focus()
   }
-  
+
+  skipVideo() {
+    this.props.actions.removeCurrentVideo(this.props.videos[0].id)
+  }  
 
   render() {
     return (
@@ -66,11 +73,32 @@ class Stage extends Component {
         </div>
 
          <div className="screenTV" >
-            <iframe style={screenStyle} src={"https://youtube.com/embed/" + this.props.videos[3].attributes.content + "?rel=0?version=3&autoplay=1&controls=0"} />
+            <button className="btn" onClick={this.skipVideo.bind(this)}>Skip video</button>
+            <iframe style={screenStyle} src={"https://youtube.com/embed/" + this.props.videos[0].attributes.content + "?rel=0?version=3&autoplay=1&controls=0"} />
+            <ul>
+              {this.props.videos.map(video => {
+                return (
+                  <li>{video.attributes.content}</li>
+                )
+              })}
+            </ul>
           </div>
       </div>
     )
   }
 }
 
-export default Stage
+function mapStateToProps(state) {
+  return {
+    videos: state.videos
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(actions, dispatch)
+  }
+}
+
+const componentCreator = connect(mapStateToProps, mapDispatchToProps)
+export default componentCreator(Stage)
