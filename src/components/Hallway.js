@@ -114,6 +114,7 @@ class Hallway extends Component {
       .then( () => {
         //this.props.actions.fetchMessages()
         this.props.actions.fetchUsers()
+        this.props.actions.fetchVideos()
       })
       .then( () => {
         this.subscribeChannel()
@@ -122,6 +123,7 @@ class Hallway extends Component {
     } else {
       this.patchUserRoomToHallway()
     }
+    
     this.props.actions.fetchTopics()
   }
 

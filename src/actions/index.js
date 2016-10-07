@@ -19,27 +19,27 @@ export function fetchTopics() {
   }
 }
 
-export function fetchMessages() {
-  const url = 'http://localhost:8000/api/v1/messages'
-
-  const messages = fetch(url,
-  {
-    method: 'GET',
-    headers: {
-      'AUTHORIZATION': `Bearer ${sessionStorage.jwt}`
-    }
-  })
-  .then(response => {
-    return response.json()
-  }).then(responseBody => {
-    return responseBody.data
-  })
-
-  return {
-    type: 'FETCH_MESSAGES',
-    payload: messages
-  }
-}
+// export function fetchMessages() {
+//   const url = 'http://localhost:8000/api/v1/messages'
+//
+//   const messages = fetch(url,
+//   {
+//     method: 'GET',
+//     headers: {
+//       'AUTHORIZATION': `Bearer ${sessionStorage.jwt}`
+//     }
+//   })
+//   .then(response => {
+//     return response.json()
+//   }).then(responseBody => {
+//     return responseBody.data
+//   })
+//
+//   return {
+//     type: 'FETCH_MESSAGES',
+//     payload: messages
+//   }
+// }
 
 export function fetchUsers() {
   const url = 'http://localhost:8000/api/v1/users'
@@ -61,6 +61,29 @@ export function fetchUsers() {
     payload: users
   }
 }
+
+export function fetchVideos() {
+  const url = 'http://localhost:8000/api/v1/videos'
+
+  const videos = fetch(url,
+  {
+    headers: {
+      'AUTHORIZATION': `Bearer ${sessionStorage.jwt}`
+    }
+  })
+  .then(response => {
+    return response.json()
+  }).then(responseBody => {
+    debugger
+    return responseBody.data
+  })
+
+  return {
+    type: 'FETCH_VIDEOS',
+    payload: videos
+  }
+}
+
 
 export function newMessage(newMessageObject) {
   return {
