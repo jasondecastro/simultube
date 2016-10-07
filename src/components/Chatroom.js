@@ -139,11 +139,19 @@ class Chatroom extends Component {
     return usersForRoom
   }
 
+  filterVideos(room_id) {
+    const videosForRoom = this.props.videos.filter(el => {
+      return el.attributes["room-id"] === parseInt(room_id)
+    })
+
+    return videosForRoom
+  }
+
   render() {
     return (
       <div className="row">
         <div className="col-sm-9">
-          <Stage users={this.filterUsers(this.getRoomId())} />
+          <Stage videos={this.filterVideos(this.getRoomId())} users={this.filterUsers(this.getRoomId())} />
         </div>
         <div className="col-sm-3-offset" className="chatBoxStyle">
           <h1>{this.name.length == 0 ? this.state.name : this.name}</h1>

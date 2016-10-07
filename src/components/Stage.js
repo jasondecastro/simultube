@@ -1,9 +1,33 @@
 import React, { Component } from 'react'
 import Character from './Character'
 
+import { connect } from 'react-redux'
+import * as actions from '../actions'
+import { bindActionCreators } from 'redux'
+
 const nameStyle = {
   color: 'white'
 }
+
+      // <div className="usersActive">
+      //     {this.props.users.map(user => {
+      //         return (
+      //           <div>
+      //             <h2 style={nameStyle}>{user.attributes.nickname}</h2>
+      //             <Character position={this.state.position} style={this.characterStyle.bind(this)} />
+      //           </div>
+
+      //         )
+      //       })}
+      //   </div>
+
+const screenStyle = {
+  width: '545px',
+  height: '400px',
+  paddingLeft: '60px',
+  paddingTop: '5px'
+}
+
 
 class Stage extends Component {
   constructor() {
@@ -40,24 +64,49 @@ class Stage extends Component {
   componentDidMount() {
     document.getElementById('stage').focus()
   }
-  
+
+  skipVideo() {
+    fetch('http://localhost:8000/api/v1/messages/' + this.props.videos[0].id,
+    {
+      method: 'DELETE',
+      headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'AUTHORIZATION': `Bearer ${sessionStorage.jwt}`
+        }
+    })
+}
 
   render() {
     return (
       <div className="stageStyle" tabIndex="0" id="stage" onKeyDown={this.navigate.bind(this)}>
-        <div className="usersActive">
-          {this.props.users.map(user => {
-              return (
-                <div>
-                  <h2 style={nameStyle}>{user.attributes.nickname}</h2>
-                  <Character position={this.state.position} style={this.characterStyle.bind(this)} />
-                </div>
-              )
-            })}
-        </div>
+
+         <div className="screenTV" >
+            <button className="btn" onClick={this.skipVideo.bind(this)}>Skip video</button>
+            <iframe style={screenStyle} src={"https://youtube.com/embed/" + this.props.videos[0].attributes.content + "?rel=0?version=3&autoplay=1&controls=0"} />
+            <ul>
+              {this.props.videos.map(video => {
+                return (
+                  <li>{video.attributes.content}</li>
+                )
+              })}
+            </ul>
+          </div>
       </div>
     )
   }
 }
 
-export default Stage
+function mapStateToProps(state) {
+  return {
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(actions, dispatch)
+  }
+}
+
+const componentCreator = connect(mapStateToProps, mapDispatchToProps)
+export default componentCreator(Stage)

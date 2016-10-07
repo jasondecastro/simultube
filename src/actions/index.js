@@ -118,3 +118,10 @@ export function destroyUser(userToDestroyID) {
     payload: userToDestroyID
   }
 }
+
+export function removeCurrentVideo(videoToDestroyID) {
+  return {
+    type: 'DESTROY_VIDEO',
+    payload: videoToDestroyID
+  }
+}

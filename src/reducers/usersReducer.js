@@ -8,7 +8,6 @@ export default function usersReducer(state=[], action) {
       let changedUserIndex = state.findIndex( user => user.id === action.payload.id )
       return [...state.slice(0,changedUserIndex), action.payload, ...state.slice(changedUserIndex+1)]
     case 'DESTROY_USER':
-      debugger
       let userIndex = state.findIndex(user => parseInt(user.id) === action.payload)
       return [...state.slice(0, userIndex), ...state.slice(userIndex + 1)]
     default:
