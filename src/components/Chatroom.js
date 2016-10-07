@@ -53,7 +53,26 @@ class Chatroom extends Component {
     }
   }
 
+  messageIsYoutube(messageContent) {
+    if (messageContent.match(/youtube.+v=([\w-]{11})/)) {
+      return true
+    } else {
+      return false
+    }
+  }
+
   sendMessage(message) {
+    let type;
+    let content;
+
+    if (this.messageIsYoutube(message)) {
+      type = "Video"
+      content = message.match(/youtube.+v=([\w-]{11})/).slice(-1)[0] //just the 11 character youtube identifier
+    } else {
+      type = "Text"
+      content = message //the original message
+    }
+
     fetch('http://localhost:8000/api/v1/messages',
     {
       method: 'POST',
@@ -65,7 +84,8 @@ class Chatroom extends Component {
       body: JSON.stringify({
         message: {
           sender: sessionStorage.getItem('nickname'),
-          content: message,
+          content: content,
+          type: type,
           room_id: this.room_id
         }
       })
@@ -95,12 +115,6 @@ class Chatroom extends Component {
     })
   }
 
-
-  // componentWillUnmount() {
-  //   this.pusher.unsubscribe(this.name.replace(' ', '_').toLowerCase());
-  // }
-
-
   componentWillMount() {
     const room_id = document.location.href.split("/")[document.location.href.split("/").length - 1]
     this.patchUserRoomId()
@@ -115,14 +129,14 @@ class Chatroom extends Component {
     const messagesForRoom = this.props.messages.filter(el => {
       return el.attributes["room-id"] === parseInt(room_id)
     })
-    return messagesForRoom 
+    return messagesForRoom
   }
 
   filterUsers(room_id) {
     const usersForRoom = this.props.users.filter(el => {
       return el.attributes["room-id"] === parseInt(room_id)
     })
-    return usersForRoom 
+    return usersForRoom
   }
 
   render() {
@@ -145,7 +159,8 @@ class Chatroom extends Component {
 function mapStateToProps(state) {
   return {
     messages: state.messages,
-    users: state.users
+    users: state.users,
+    videos: state.videos
   }
 }
 
