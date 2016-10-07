@@ -194,6 +194,10 @@ class Hallway extends Component {
     this.mainSocketChannel.bind('user_destroy_event', function(userToDelete){
       this.props.actions.destroyUser(userToDelete.id)
     }, this);
+
+    this.mainSocketChannel.bind('remove_video', function(videoToDelete){
+      this.props.actions.removeCurrentVideo(videoToDelete.id)
+    }, this);
   }
 
   componentDidMount() {

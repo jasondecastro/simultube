@@ -5,7 +5,7 @@ export default function videosReducer(state=[], action) {
     case 'NEW_VIDEO':
       return [...state, action.payload]
     case 'DESTROY_VIDEO':
-      let videoIndex = state.findIndex(video => video.id === action.payload)
+      let videoIndex = state.findIndex(video => parseInt(video.id) === action.payload)
       return [...state.slice(0, videoIndex), ...state.slice(videoIndex + 1)]
     default:
       return state

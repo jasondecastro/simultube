@@ -9,6 +9,18 @@ const nameStyle = {
   color: 'white'
 }
 
+      // <div className="usersActive">
+      //     {this.props.users.map(user => {
+      //         return (
+      //           <div>
+      //             <h2 style={nameStyle}>{user.attributes.nickname}</h2>
+      //             <Character position={this.state.position} style={this.characterStyle.bind(this)} />
+      //           </div>
+
+      //         )
+      //       })}
+      //   </div>
+
 const screenStyle = {
   width: '545px',
   height: '400px',
@@ -54,23 +66,20 @@ class Stage extends Component {
   }
 
   skipVideo() {
-    this.props.actions.removeCurrentVideo(this.props.videos[0].id)
-  }  
+    fetch('http://localhost:8000/api/v1/messages/' + this.props.videos[0].id,
+    {
+      method: 'DELETE',
+      headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'AUTHORIZATION': `Bearer ${sessionStorage.jwt}`
+        }
+    })
+}
 
   render() {
     return (
       <div className="stageStyle" tabIndex="0" id="stage" onKeyDown={this.navigate.bind(this)}>
-        <div className="usersActive">
-          {this.props.users.map(user => {
-              return (
-                <div>
-                  <h2 style={nameStyle}>{user.attributes.nickname}</h2>
-                  <Character position={this.state.position} style={this.characterStyle.bind(this)} />
-                </div>
-
-              )
-            })}
-        </div>
 
          <div className="screenTV" >
             <button className="btn" onClick={this.skipVideo.bind(this)}>Skip video</button>
@@ -90,7 +99,6 @@ class Stage extends Component {
 
 function mapStateToProps(state) {
   return {
-    videos: state.videos
   }
 }
 
