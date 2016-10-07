@@ -5,6 +5,14 @@ const nameStyle = {
   color: 'white'
 }
 
+const screenStyle = {
+  width: '545px',
+  height: '400px',
+  paddingLeft: '60px',
+  paddingTop: '5px'
+}
+
+
 class Stage extends Component {
   constructor() {
     super()
@@ -52,9 +60,14 @@ class Stage extends Component {
                   <h2 style={nameStyle}>{user.attributes.nickname}</h2>
                   <Character position={this.state.position} style={this.characterStyle.bind(this)} />
                 </div>
+
               )
             })}
         </div>
+
+         <div className="screenTV" >
+            <iframe style={screenStyle} src={"https://youtube.com/embed/" + this.props.videos[3].attributes.content + "?rel=0?version=3&autoplay=1&controls=0"} />
+          </div>
       </div>
     )
   }
