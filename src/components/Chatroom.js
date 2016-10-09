@@ -89,7 +89,7 @@ class Chatroom extends Component {
   }
 
   postMessage(type, content, title) {
-    fetch('http://localhost:8000/api/v1/messages',
+    fetch('https://flowers-endpoint.herokuapp.com/api/v1/messages',
     {
       method: 'POST',
       headers: {
@@ -110,7 +110,7 @@ class Chatroom extends Component {
   }
 
   patchUserRoomId() {
-    const url = 'http://localhost:8000/api/v1/users/' + sessionStorage.getItem('id')
+    const url = 'https://flowers-endpoint.herokuapp.com/api/v1/users/' + sessionStorage.getItem('id')
     fetch(url,
     {
       headers: {

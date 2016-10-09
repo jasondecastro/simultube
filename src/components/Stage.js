@@ -61,7 +61,7 @@ class Stage extends Component {
   }
 
   skipVideo() {
-    fetch('http://localhost:8000/api/v1/messages/' + this.props.videos[0].id,
+    fetch('https://flowers-endpoint.herokuapp.com/api/v1/messages/' + this.props.videos[0].id,
     {
       method: 'DELETE',
       headers: {
