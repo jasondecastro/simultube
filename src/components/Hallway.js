@@ -109,7 +109,7 @@ class Hallway extends Component {
   }
 
   componentWillMount() {
-    if (sessionStorage.getItem('nickname') === null) {
+    if (!sessionStorage.nickname) {
       this.initializeUser()
       .then( () => {
         //this.props.actions.fetchMessages()
