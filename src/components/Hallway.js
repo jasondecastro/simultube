@@ -109,10 +109,9 @@ class Hallway extends Component {
   }
 
   componentWillMount() {
-    if (sessionStorage.getItem('nickname') === null) {
+    if (!sessionStorage.nickname) {
       this.initializeUser()
       .then( () => {
-        //this.props.actions.fetchMessages()
         this.props.actions.fetchUsers()
         this.props.actions.fetchVideos()
       })
@@ -123,8 +122,6 @@ class Hallway extends Component {
     } else {
       this.patchUserRoomToHallway()
     }
-    
-    this.props.actions.fetchTopics()
   }
 
   changeNicknameValue(event) {
@@ -227,7 +224,6 @@ class Hallway extends Component {
                 <h2 style={basicStyle}>
                   <Link style={basicStyle} to="/rooms/1">The Garden</Link>
                 </h2>
-                <p style={basicStyle}>{this.props.topics[0]}</p>
               </center>
             </div>
             <Link to="/rooms/1"><img src="https://i.imgur.com/uc2UetF.png" style={doorStyle}/></Link>
@@ -239,7 +235,6 @@ class Hallway extends Component {
                 <h2 style={basicStyle}>
                   <Link style={basicStyle} to="/rooms/2">The Pool</Link>
                 </h2>
-                <p style={basicStyle}>{this.props.topics[1]}</p>
               </center>
             </div>
            <Link to="/rooms/2"><img src="http://i.imgur.com/uc2UetF.png" style={doorStyle}/></Link>
@@ -251,7 +246,6 @@ class Hallway extends Component {
                 <h2 style={basicStyle}>
                   <Link style={basicStyle} to="/rooms/3">The Parlor</Link>
                 </h2>
-                <p style={basicStyle}>{this.props.topics[2]}</p>
               </center>
             </div>
             <Link to="/rooms/3"><img src="http://i.imgur.com/uc2UetF.png" style={doorStyle}/></Link>
