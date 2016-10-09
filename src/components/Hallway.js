@@ -123,8 +123,8 @@ class Hallway extends Component {
     } else {
       this.patchUserRoomToHallway()
     }
-    
-    this.props.actions.fetchTopics()
+
+    //this.props.actions.fetchTopics()
   }
 
   changeNicknameValue(event) {
