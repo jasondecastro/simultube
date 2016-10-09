@@ -32,11 +32,14 @@ const screenStyle = {
 class Stage extends Component {
   constructor() {
     super()
+
+    this.currentVideo = this.currentVideo.bind(this)
+
     this.state = {
       position: 0
     }
   }
-  
+
   navigate(e) {
     if (e.keyCode === 37) {
       console.log("moving left")
@@ -60,7 +63,7 @@ class Stage extends Component {
       backgroundColor: 'white'
     }
   }
-  
+
   componentDidMount() {
     document.getElementById('stage').focus()
   }
@@ -77,13 +80,25 @@ class Stage extends Component {
     })
 }
 
+  currentVideo() {
+    if (this.props.videos.length > 0) {
+      return <iframe style={screenStyle} src={"https://youtube.com/embed/" + this.props.videos[0].attributes.content + "?rel=0?version=3&autoplay=1&controls=0"} />
+    }
+    else {
+      return <div>NO VIDEO!!!!</div>
+    }
+  }
+  //  <iframe style={screenStyle} src={"https://youtube.com/embed/" + this.props.videos[0].attributes.content + "?rel=0?version=3&autoplay=1&controls=0"} />
+
   render() {
     return (
       <div className="stageStyle" tabIndex="0" id="stage" onKeyDown={this.navigate.bind(this)}>
 
          <div className="screenTV" >
             <button className="btn" onClick={this.skipVideo.bind(this)}>Skip video</button>
-            <iframe style={screenStyle} src={"https://youtube.com/embed/" + this.props.videos[0].attributes.content + "?rel=0?version=3&autoplay=1&controls=0"} />
+            <div>
+              {this.currentVideo()}
+            </div>
             <ul>
               {this.props.videos.map(video => {
                 return (
