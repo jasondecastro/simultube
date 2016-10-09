@@ -116,7 +116,7 @@ class Chatroom extends Component {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'AUTHORIZATION': `Berarer ${sessionStorage.jwt}`
+        'AUTHORIZATION': `Bearer ${sessionStorage.jwt}`
       },
       method: 'PATCH',
       body: JSON.stringify({
