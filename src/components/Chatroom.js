@@ -61,18 +61,34 @@ class Chatroom extends Component {
     }
   }
 
+  fetchTitle(content) {
+    return fetch('https://www.googleapis.com/youtube/v3/videos?id='+ content +'&key=AIzaSyDilV5jMmHLNjPkstZhxIQkpfTwiRpK1Lo&fields=items(snippet(title))&part=snippet').then(response => {
+      return response.json()
+    }).then(responseBody => {
+      return responseBody.items[0].snippet.title
+    })
+  }
+
   sendMessage(message) {
     let type;
     let content;
+    let title;
 
     if (this.messageIsYoutube(message)) {
       type = "Video"
       content = message.match(/youtube.+v=([\w-]{11})/).slice(-1)[0] //just the 11 character youtube identifier
+      title = this.fetchTitle(content)
+      title.then( (title) => {
+        this.postMessage(type, content, title)
+      })
     } else {
       type = "Text"
       content = message //the original message
+      this.postMessage(type, content)
     }
+  }
 
+  postMessage(type, content, title) {
     fetch('http://localhost:8000/api/v1/messages',
     {
       method: 'POST',
@@ -86,6 +102,7 @@ class Chatroom extends Component {
           sender: sessionStorage.getItem('nickname'),
           content: content,
           type: type,
+          title: title,
           room_id: this.room_id
         }
       })
@@ -99,7 +116,7 @@ class Chatroom extends Component {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'AUTHORIZATION': `Bearer ${sessionStorage.jwt}`
+        'AUTHORIZATION': `Berarer ${sessionStorage.jwt}`
       },
       method: 'PATCH',
       body: JSON.stringify({
@@ -119,7 +136,6 @@ class Chatroom extends Component {
     const room_id = document.location.href.split("/")[document.location.href.split("/").length - 1]
     this.patchUserRoomId()
   }
-
 
   getRoomId() {
     return document.location.href.split("/")[document.location.href.split("/").length - 1]
@@ -149,16 +165,11 @@ class Chatroom extends Component {
 
   render() {
     return (
-      <div className="row">
-        <div className="col-sm-9">
+      <div>
           <Stage videos={this.filterVideos(this.getRoomId())} users={this.filterUsers(this.getRoomId())} />
-        </div>
-        <div className="col-sm-3-offset" className="chatBoxStyle">
-          <h1>{this.name.length == 0 ? this.state.name : this.name}</h1>
           <Messages messages={this.filterMessages(this.getRoomId())} />
           <MessageForm sendMessage={this.sendMessage.bind(this)} />
           <h3><Link to="/">Leave</Link></h3>
-        </div>
       </div>
     )
   }

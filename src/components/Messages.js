@@ -2,17 +2,14 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 
 const messageStyle = {
-  maxWidth: '300px',
-  overflow: 'scroll',
-  height: '300px'
+  maxWidth: '640px',
+  overflow: 'hidden',
+  height: '60px',
+  backgroundColor: 'black',
+  color: 'white'
 }
 
 class Messages extends Component {
-  componentDidUpdate() {
-    var node = ReactDOM.findDOMNode(this)
-    node.scrollTop = node.scrollHeight
-  }
-
   render() {
     return (
       <div className="panel panel-default" style={messageStyle}>

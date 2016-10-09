@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 const inputStyle = {
-  maxWidth: '300px'
+  width: '640px'
 }
 
 class MessageForm extends Component {
