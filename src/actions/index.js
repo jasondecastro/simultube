@@ -1,5 +1,5 @@
 export function fetchTopics() {
-  const url = 'http://localhost:8000/api/v1/topics'
+  const url = 'https://flowers-endpoint.herokuapp.com/api/v1/topics'
 
   const topics = fetch(url)
     .then(response => {
@@ -20,7 +20,7 @@ export function fetchTopics() {
 }
 
 // export function fetchMessages() {
-//   const url = 'http://localhost:8000/api/v1/messages'
+//   const url = 'https://flowers-endpoint.herokuapp.com/api/v1/messages'
 //
 //   const messages = fetch(url,
 //   {
@@ -42,7 +42,7 @@ export function fetchTopics() {
 // }
 
 export function fetchUsers() {
-  const url = 'http://localhost:8000/api/v1/users'
+  const url = 'https://flowers-endpoint.herokuapp.com/api/v1/users'
 
   const users = fetch(url,
   {
@@ -63,7 +63,7 @@ export function fetchUsers() {
 }
 
 export function fetchVideos() {
-  const url = 'http://localhost:8000/api/v1/videos'
+  const url = 'https://flowers-endpoint.herokuapp.com/api/v1/videos'
 
   const videos = fetch(url,
   {

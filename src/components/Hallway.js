@@ -50,7 +50,7 @@ class Hallway extends Component {
   }
 
   initializeUser() {
-    const url = 'http://localhost:8000/api/v1/users/'
+    const url = 'https://flowers-endpoint.herokuapp.com/api/v1/users/'
     return fetch(url,
     {
       headers: {
@@ -86,7 +86,7 @@ class Hallway extends Component {
   }
 
    patchUserRoomToHallway() {
-    const url = 'http://localhost:8000/api/v1/users/' + sessionStorage.getItem('id')
+    const url = 'https://flowers-endpoint.herokuapp.com/api/v1/users/' + sessionStorage.getItem('id')
     fetch(url,
     {
       headers: {
@@ -136,7 +136,7 @@ class Hallway extends Component {
   }
 
   patchNickname() {
-    const url = 'http://localhost:8000/api/v1/users/' + sessionStorage.getItem('id')
+    const url = 'https://flowers-endpoint.herokuapp.com/api/v1/users/' + sessionStorage.getItem('id')
 
     fetch(url,
     {
@@ -201,7 +201,7 @@ class Hallway extends Component {
     window.addEventListener("beforeunload", (ev) =>
     {
       ev.preventDefault()
-      fetch('http://localhost:8000/api/v1/users/' + sessionStorage.getItem('id'),
+      fetch('https://flowers-endpoint.herokuapp.com/api/v1/users/' + sessionStorage.getItem('id'),
       {
         method: 'DELETE'
       })
