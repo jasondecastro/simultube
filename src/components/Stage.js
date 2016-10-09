@@ -77,7 +77,7 @@ class Stage extends Component {
       return (
         <div>
           <h1 style={titleStyle}>{this.props.videos[0].attributes.title}</h1>
-          <iframe frameBorder="0" style={screenStyle} src={"https://youtube.com/embed/" + this.props.videos[0].attributes.content + "?rel=0?version=3&autoplay=1&controls=0"} />
+          <iframe frameBorder="0" style={screenStyle} src={"https://youtube.com/embed/" + this.props.videos[0].attributes.content + "?rel=0?version=3&autoplay=1&controls=0&modestbranding=1&autohide=1&showinfo=0"} />
           <br />
           <button className="btn" onClick={this.skipVideo.bind(this)} >Next Video</button>
           <br />
