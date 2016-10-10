@@ -41,9 +41,9 @@ class Messages extends Component {
    //   box={{ x: center.width - 180, y: center.height - 150, width: 300, height: 105 }}
 
     return (
-      <div>
+      <div style={messageStyle}>
         <Balloon
-        box={{ x: center.width - 180, y: center.height - 150, width: 462, height: 50 }}
+        box={{ x: 0, y: 0, width: 462, height: 50 }}
         pointer={{ x: center.width , y: center.height }}
         style={{ borderRadius: '5px' }}
         backgroundColor="#ECF0F1"
@@ -59,11 +59,7 @@ class Messages extends Component {
         >
           <p style={{ textAlign: 'center', fontSize: '28px' }}>{this.currentMessageContent()}</p>
         </Balloon>
-        <div className="panel panel-default" style={messageStyle}>
-          <div className="panel-body" id="messages">
-            {this.currentMessage()}
-          </div>
-        </div>
+
       </div>
 
     )
