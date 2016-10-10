@@ -9,7 +9,7 @@ const characterStyle = {
 const characters = {
   padding: '15px',
   width: '462',
-  overflow: 'scroll',
+  overflow: 'hidden',
   height: '155px',
   marginTop: '-29px'
 }
@@ -20,7 +20,7 @@ class Characters extends Component {
       <div style={characters}>
         {this.props.users.map(user => {
           return (
-            <img style={characterStyle} src="http://bbsimg.ngfiles.com/1/24095000/ngbbs5006e2369924e.png" />
+            <img alt={user.nickname} style={characterStyle} src="http://bbsimg.ngfiles.com/1/24095000/ngbbs5006e2369924e.png" />
           )
         })}
       </div>

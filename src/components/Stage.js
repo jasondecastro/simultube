@@ -116,13 +116,29 @@ class Stage extends Component {
       )
     }
     else {
-      return <div>
-      <h1 style={titleStyle}>&nbsp;</h1>
+      return (
+         <div>
+          <h1 style={titleStyle}>No video. Why not add one?</h1>
+          <iframe frameBorder="0" style={screenStyle}/>
+          <div style={beTheChangeYouWantToBe}>
 
-        <div style={screenStyle}>
-          <center><h1 style={titleStyle}>No video. Why not add one?</h1></center>
+            <div className="panel panel-primary" style={panelHeight}>
+              <div className="panel-heading">Video Queue</div>
+              <div className="panel-body">
+                  
+              </div>
+            </div>  
+
+             <div className="panel panel-primary">
+              <div className="panel-heading">Controls</div>
+              <div className="panel-body">
+                <button className="btn btn-primary" disabled>Next Video</button>                
+                &nbsp;&nbsp;<Link to="/"><button className="btn btn-danger">Leave</button></Link>
+              </div>
+            </div>             
+          </div>
         </div>
-      </div>
+      )
     }
   }
 
