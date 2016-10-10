@@ -9,6 +9,7 @@
   "dependencies": {
     "pusher-js": "^3.2.1",
     "react": "^15.3.2",
+    "react-balloon": "^0.2.5",
     "react-dom": "^15.3.2",
     "react-redux": "^4.4.5",
     "react-router": "^2.8.1",
