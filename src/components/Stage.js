@@ -89,7 +89,8 @@ class Stage extends Component {
     if (this.props.videos.length > 0) {
       return (
         <div>
-          <h1 style={titleStyle}>{this.props.videos[0].attributes.title}</h1>
+
+          <span style={{maxWidth: '462px', overflow: 'scroll'}}><h1 style={titleStyle}>{this.props.videos[0].attributes.title}</h1></span>
           <iframe frameBorder="0" style={screenStyle} src={"https://youtube.com/embed/" + this.props.videos[0].attributes.content + "?rel=0?version=3&autoplay=1&controls=0&modestbranding=1&autohide=1&showinfo=0"} />
           <div style={beTheChangeYouWantToBe}>
 

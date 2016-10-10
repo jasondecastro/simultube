@@ -8,7 +8,7 @@ import { bindActionCreators } from 'redux'
 import Pusher from 'pusher-js'
 
 const tryHarder = {
-  paddingLeft: '440px',
+  paddingLeft: '450px',
   margin: '0 auto',
   paddingTop: '100px'
 }
@@ -33,6 +33,8 @@ const formStyle = {
 class Hallway extends Component {
   constructor(props) {
     super(props)
+
+    this.getUsersInRoomCount = this.getUsersInRoomCount.bind(this)
 
     this.state = {
       nickname: sessionStorage.getItem('nickname'),
@@ -199,6 +201,26 @@ class Hallway extends Component {
     })
   }
 
+  getUsersInRoomCount(room_id) {
+    const usersForRoom = this.props.users.filter(el => {
+      return el.attributes["room-id"] === parseInt(room_id)
+    })
+    
+    return usersForRoom.length
+  }
+
+  getCurrentVideoTitle(room_id) {
+    const videosForRoom = this.props.videos.filter(el => {
+      return el.attributes["room-id"] === parseInt(room_id)
+    })
+
+    if (videosForRoom.length > 0) {
+      return videosForRoom[0].attributes.title
+    } else {
+      return "There are currently no videos."
+    }
+  }
+
   render() {
     return (
       <div style={tryHarder}>
@@ -215,32 +237,34 @@ class Hallway extends Component {
           <tbody>
             <tr>
               <th scope="row">1</th>
-              <td>There are currently no videos.</td>
-              <td><strong>6/6</strong></td>
+              <td>{this.getCurrentVideoTitle(1)}</td>
+              <td><strong>{this.getUsersInRoomCount(1) + "/6"}</strong></td>
               <td><Link to="/rooms/1"><button style={btnStyle} className="btn btn-primary btn-sm">Enter</button></Link></td>
             </tr>
             <tr>
               <th scope="row">2</th>
-              <td>There are currently no videos.</td>
-              <td><strong>6/6</strong></td>
+              <td>{this.getCurrentVideoTitle(2)}</td>
+              <td><strong>{this.getUsersInRoomCount(2) + "/6"}</strong></td>
               <td><Link to="/rooms/2"><button style={btnStyle} className="btn btn-primary btn-sm">Enter</button></Link></td>
             </tr>
             <tr>
               <th scope="row">3</th>
-              <td>There are currently no videos.</td>
-              <td><strong>6/6</strong></td>
+              <td>{this.getCurrentVideoTitle(3)}</td>
+              <td><strong>{this.getUsersInRoomCount(3) + "/6"}</strong></td>
               <td><Link to="/rooms/3"><button style={btnStyle} className="btn btn-primary btn-sm">Enter</button></Link></td>
             </tr>
           </tbody>
         </table>
         <br />
-        <h4>Your nickname is currently <u><span style={{color: 'red'}}>{this.state.nickname}</span></u></h4>
-        <form style={formStyle} onSubmit={this.handleNicknameChange.bind(this)}>
-          <div className="input-group">
-              <input value={this.state.nickname} onChange={this.changeNicknameValue.bind(this)} type="text" className="form-control" placeholder="Change nickname..." />
-              <span className="input-group-btn">
-                <button className="btn btn-primary" type="button">Change</button>
-              </span>
+        <form className="form-inline" style={formStyle} onSubmit={this.handleNicknameChange.bind(this)}>
+          <div className="form-group">
+            <label><h4>Your nickname is currently</h4></label>
+            <div className="input-group">
+                <input value={this.state.nickname} onChange={this.changeNicknameValue.bind(this)} type="text" className="form-control" placeholder="Change nickname..." />
+                <span className="input-group-btn">
+                  <button className="btn btn-primary" type="button">Change</button>
+                </span>
+            </div>
           </div>
         </form>
       </div>

@@ -10,7 +10,7 @@ const characters = {
   padding: '15px',
   width: '462',
   overflow: 'hidden',
-  height: '155px',
+  height: '88px',
   marginTop: '-29px'
 }
 
