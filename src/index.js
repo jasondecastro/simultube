@@ -18,7 +18,6 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={App} />
-      <Route path="/hallway" component={App} />
       <Route path="/rooms/:id" component={Chatroom} />
     </Router>
   </Provider>,

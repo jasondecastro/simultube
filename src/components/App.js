@@ -11,11 +11,7 @@ class App extends Component {
   constructor() {
     super()
   }
-
-  componentWillMount() {
-    window.history.pushState('hallway', 'Hallway', '/hallway')
-  }
-
+  
   render() {
     return (
       <Hallway />
