@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 const inputStyle = {
-  width: '640px'
+  width: '462px'
 }
 
 class MessageForm extends Component {
