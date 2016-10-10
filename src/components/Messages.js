@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
+import Balloon from './Balloon'
 
-const messageStyle = {
+const bubbleStyle = {
   maxWidth: '462px',
   overflow: 'hidden',
   height: '60px',
@@ -9,26 +10,100 @@ const messageStyle = {
   marginTop: '-260px'
 }
 
+const textStyle = {
+  textAlign: 'center'
+}
+
 class Messages extends Component {
   constructor() {
     super()
 
-    this.currentMessage = this.currentMessage.bind(this)
+    // this.currentMessage = this.currentMessage.bind(this)
+    this.bubbleMap = this.bubbleMap.bind(this)
   }
 
-  currentMessage() {
-    if (this.props.messages.length > 0) {
-      return (
-        <p><strong>{this.props.messages[this.props.messages.length - 1].attributes.sender}:</strong> {this.props.messages[this.props.messages.length - 1].attributes.content}</p>
-      )
-    }
+  // currentMessage() {
+  //   if (this.props.messages.length > 0) {
+  //     return (
+  //       <p><strong>{this.props.messages[this.props.messages.length - 1].attributes.sender}:</strong> {this.props.messages[this.props.messages.length - 1].attributes.content}</p>
+  //     )
+  //   }
+  // }
+  //
+  // currentMessageContent() {
+  //   if (this.props.messages.length > 0) {
+  //     return (
+  //       this.props.messages[this.props.messages.length - 1].attributes.content
+  //     )
+  //   }
+  // }
+
+  determineUserIndex(message) {
+    return this.props.users.findIndex( user => message.attributes.sender === user.attributes.nickname )
   }
+
+  determinePointerXCoordinate(userIndex) {
+    return ((462/6)*(userIndex+1)) - (462/6/2)
+  }
+
+  bubbleColorMap(index) {
+    const colors = {
+      0: "#848482",
+      1: "#BFC1C2",
+      2: "#E5E4E2"
+    }
+
+    return colors[index]
+  }
+
+  bubbleMap() {
+    let messages = this.props.messages.slice(-3)
+
+    if (messages.length === 1) {
+      messages.unshift(undefined, undefined)
+    }
+
+    if (messages.length === 2) {
+      messages.unshift(undefined)
+    }
+
+    return messages.map( (message, index) => {
+      if (message) {
+        let userIndex = this.determineUserIndex(message)
+        let pointerX;
+        let pointerY;
+
+        if (userIndex === -1) {
+          pointerX = 200
+          pointerY = index*35
+        } else {
+          pointerX = this.determinePointerXCoordinate(userIndex);
+          pointerY = 125
+        }
+
+        let color = this.bubbleColorMap(index)
+
+        return (
+          <Balloon
+          box={{ x: 0, y: 0 + index*35, width: 462, height: 30 }}
+          pointer={{ x: pointerX, y: pointerY }}
+          style={{ borderRadius: '20px' }}
+          backgroundColor={color}
+          disable={true}
+          >
+            <p style={textStyle}>{message.attributes.content}</p>
+          </Balloon>
+      )
+      } else {
+        return
+      }
+    })
+  }
+
   render() {
     return (
-      <div className="panel panel-default" style={messageStyle}>
-        <div className="panel-body" id="messages">
-          {this.currentMessage()}
-        </div>
+      <div style={bubbleStyle}>
+        {this.bubbleMap()}
       </div>
     )
   }
