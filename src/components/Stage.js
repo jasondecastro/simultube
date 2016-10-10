@@ -1,27 +1,40 @@
 import React, { Component } from 'react'
 import Character from './Character'
 
+import { Link } from 'react-router'
+
 import { connect } from 'react-redux'
 import * as actions from '../actions'
 import { bindActionCreators } from 'redux'
 
 const nameStyle = {
-  color: 'white'
+  color: 'black'
 }
 
 const screenStyle = {
-  width: '640px',
-  height: '360px'
+  width: '462px',
+  height: '260px'
 }
 
 const titleStyle = {
-  color: 'white',
+  color: 'black',
   fontSize: '18px'
 }
 
 const noVideo = {
-  width: '640px',
-  height: '360px'
+  width: '462px',
+  height: '260px'
+}
+
+const beTheChangeYouWantToBe = {
+  marginLeft: '-300px',
+  marginTop: '-292px',
+  width: '250px'
+}
+
+const panelHeight = {
+  height: '400px',
+  overflow: 'scroll'
 }
 
 
@@ -77,23 +90,34 @@ class Stage extends Component {
       return (
         <div>
           <h1 style={titleStyle}>{this.props.videos[0].attributes.title}</h1>
-          <iframe frameBorder="0" style={screenStyle} src={"https://youtube.com/embed/" + this.props.videos[0].attributes.content + "?rel=0?version=3&autoplay=1&controls=0"} />
-          <br />
-          <button className="btn" onClick={this.skipVideo.bind(this)} >Next Video</button>
-          <br />
-          <ul>
-              {this.props.videos.map(video => {
-                return (
-                  <li><a target="_blank" href={"http://youtube.com/watch?v=" + video.attributes.content}>{video.attributes.title}</a></li>
-                )
-              })}
-            </ul>
+          <iframe frameBorder="0" style={screenStyle} src={"https://youtube.com/embed/" + this.props.videos[0].attributes.content + "?rel=0?version=3&autoplay=1&controls=0&modestbranding=1&autohide=1&showinfo=0"} />
+          <div style={beTheChangeYouWantToBe}>
+
+            <div className="panel panel-primary" style={panelHeight}>
+              <div className="panel-heading">Video Queue</div>
+              <div className="panel-body">
+                  {this.props.videos.map((video, index) => {
+                    return (
+                      <p key={index}><strong>({index + 1})</strong> <a target="_blank" href={"http://youtube.com/watch?v=" + video.attributes.content}>{video.attributes.title}</a></p>
+                    )
+                  })}
+              </div>
+            </div>  
+
+             <div className="panel panel-primary">
+              <div className="panel-heading">Controls</div>
+              <div className="panel-body">
+                <button className="btn btn-primary" onClick={this.skipVideo.bind(this)} >Next Video</button>                
+                &nbsp;&nbsp;<Link to="/"><button className="btn btn-danger">Leave</button></Link>
+              </div>
+            </div>             
+          </div>
         </div>
       )
     }
     else {
       return <div>
-      <h1 style={titleStyle}>A</h1>
+      <h1 style={titleStyle}>&nbsp;</h1>
 
         <div style={screenStyle}>
           <center><h1 style={titleStyle}>No video. Why not add one?</h1></center>
