@@ -150,10 +150,10 @@ export default class Balloon extends Component {
   }
 
   getPointerType(origin, destination) {
-    const degree = this.getDegree(origin, destination);
-    if (degree >= -45 && degree < 45) return 'right';
-    if (degree >= 45 && degree < 135) return 'top';
-    if ((degree >= 135 && degree <= 180) || (degree >= -180 && degree < -135)) return 'left';
+    // const degree = this.getDegree(origin, destination);
+    // if (degree >= -45 && degree < 45) return 'right';
+    // if (degree >= 45 && degree < 135) return 'top';
+    // if ((degree >= 135 && degree <= 180) || (degree >= -180 && degree < -135)) return 'left';
     return 'bottom';
   }
 

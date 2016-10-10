@@ -173,7 +173,9 @@ class Chatroom extends Component {
     return (
       <div style={tryHarder}>
           <Stage videos={this.filterVideos(this.getRoomId())} />
-          <Messages messages={this.filterMessages(this.getRoomId())} />
+          <Messages users={this.filterUsers(this.getRoomId())} messages={this.filterMessages(this.getRoomId())} />
+            <br /> <br /> <br /> <br />
+
           <Characters users={this.filterUsers(this.getRoomId())} />
           <MessageForm sendMessage={this.sendMessage.bind(this)} />
       </div>
