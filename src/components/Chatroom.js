@@ -4,12 +4,18 @@ import { Link } from 'react-router'
 import Messages from './Messages'
 import MessageForm from './MessageForm'
 import Stage from './Stage'
+import Characters from './Characters'
 
 import { connect } from 'react-redux'
 import * as actions from '../actions'
 import { bindActionCreators } from 'redux'
 
 import Pusher from 'pusher-js'
+
+const tryHarder = {
+  margin: '0 auto',
+  paddingLeft: '570px'
+}
 
 class Chatroom extends Component {
   constructor(props) {
@@ -165,11 +171,11 @@ class Chatroom extends Component {
 
   render() {
     return (
-      <div>
-          <Stage videos={this.filterVideos(this.getRoomId())} users={this.filterUsers(this.getRoomId())} />
+      <div style={tryHarder}>
+          <Stage videos={this.filterVideos(this.getRoomId())} />
           <Messages messages={this.filterMessages(this.getRoomId())} />
+          <Characters users={this.filterUsers(this.getRoomId())} />
           <MessageForm sendMessage={this.sendMessage.bind(this)} />
-          <h3><Link to="/">Leave</Link></h3>
       </div>
     )
   }
