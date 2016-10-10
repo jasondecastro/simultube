@@ -7,7 +7,7 @@ const messageStyle = {
   overflow: 'hidden',
   height: '60px',
   color: 'black',
-  marginTop: '-250px'
+  marginTop: '-260px'
 }
 
 class Messages extends Component {
