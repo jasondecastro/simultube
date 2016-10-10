@@ -2,14 +2,16 @@ import React, { Component } from 'react'
 
 const characterStyle = {
   width: '70px',
+  paddingLeft: '5px',
   height: '70px'
 }
 
 const characters = {
   padding: '15px',
   width: '462',
-  overflowY: 'scroll',
-  height: '86px'
+  overflow: 'scroll',
+  height: '155px',
+  marginTop: '-29px'
 }
 
 class Characters extends Component {
@@ -18,7 +20,7 @@ class Characters extends Component {
       <div style={characters}>
         {this.props.users.map(user => {
           return (
-            <img style={characterStyle} src="http://66.media.tumblr.com/9c2e91c675901c919ffc544a4e387823/tumblr_noejg9qNbW1sigvjco1_400.png" />
+            <img style={characterStyle} src="http://bbsimg.ngfiles.com/1/24095000/ngbbs5006e2369924e.png" />
           )
         })}
       </div>

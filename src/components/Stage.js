@@ -33,7 +33,7 @@ const beTheChangeYouWantToBe = {
 }
 
 const panelHeight = {
-  height: '400px',
+  height: '410px',
   overflow: 'scroll'
 }
 
