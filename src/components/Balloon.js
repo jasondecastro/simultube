@@ -276,10 +276,10 @@ export default class Balloon extends Component {
               }
           }
           onDragStart={ onBoxDragStart }
-          onDrag={ ::this.onBoxDrag }
-          onDragStop={ ::this.onBoxDragStop }
+          onDrag={ this.onBoxDrag }
+          onDragStop={ this.onBoxDragStop }
           onResizeStart={ onBoxResizeStart }
-          onResize={ ::this.onBoxResize }
+          onResize={ this.onBoxResize }
           onResizeStop={ onBoxResizeStop }
           bounds="parent"
           zIndex={ zIndex }
@@ -299,8 +299,8 @@ export default class Balloon extends Component {
           height={10}
           style={ Object.assign({}, { pointerEvents: 'auto', ...cursor }) }
           onDragStart={ onPointerDragStart }
-          onDrag={ ::this.onPointerDrag }
-          onDragStop={ ::this.onPointerDragStop }
+          onDrag={ this.onPointerDrag }
+          onDragStop={ this.onPointerDragStop }
           bounds="parent"
           moveAxis={ this.props.disable ? 'none' : 'both' }
           isResizable={{

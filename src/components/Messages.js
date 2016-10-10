@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
+import Balloon from './Balloon'
 
 const messageStyle = {
   maxWidth: '462px',
@@ -23,13 +24,48 @@ class Messages extends Component {
       )
     }
   }
+
+  currentMessageContent() {
+    if (this.props.messages.length > 0) {
+      return (
+        this.props.messages[this.props.messages.length - 1].attributes.content
+      )
+    }
+  }
   render() {
+    const center = {
+     width: document.body.clientWidth / 2,
+     height: document.body.clientHeight / 2,
+   };
+
+   //   box={{ x: center.width - 180, y: center.height - 150, width: 300, height: 105 }}
+
     return (
-      <div className="panel panel-default" style={messageStyle}>
-        <div className="panel-body" id="messages">
-          {this.currentMessage()}
+      <div>
+        <Balloon
+        box={{ x: center.width - 180, y: center.height - 150, width: 462, height: 50 }}
+        pointer={{ x: center.width , y: center.height }}
+        style={{ borderRadius: '5px' }}
+        backgroundColor="#ECF0F1"
+        className={ 'animated bounceInUp' }
+        minWidth={ 250 }
+        minHeight={ 105 }
+        maxWidth={ 800 }
+        maxHeight={ 400 }
+        onPointerDragStop={(position) => console.dir(position)}
+        onBoxResize={size => console.log(size)}
+        onBoxResizeStop={size => console.log(size)}
+        disable={true}
+        >
+          <p style={{ textAlign: 'center', fontSize: '28px' }}>{this.currentMessageContent()}</p>
+        </Balloon>
+        <div className="panel panel-default" style={messageStyle}>
+          <div className="panel-body" id="messages">
+            {this.currentMessage()}
+          </div>
         </div>
       </div>
+
     )
   }
 }
