@@ -7,41 +7,34 @@ import { bindActionCreators } from 'redux'
 
 import Pusher from 'pusher-js'
 
-const rooms = {
-  paddingLeft: '25px',
-  position: 'absolute',
-  marginLeft: '70px',
-  bottom: '0'
+const tryHarder = {
+  paddingLeft: '450px',
+  margin: '0 auto',
+  paddingTop: '100px'
+}
+
+const tableStyle = {
+  width: '500px'
+}
+
+const btnStyle = {
+  paddingTop: '0px',
+  height: '20px'
+}
+
+const headerStyle = {
+  fontSize: '72px'
 }
 
 const formStyle = {
-  marginTop: '45px',
-  marginLeft: '80px'
-}
-
-const doorStyle = {
-  width: '300px',
-  height: '300px',
-  marginLeft: '60px'
-}
-
-const basicStyle = {
-  color: 'black'
-}
-
-const inputStyle = {
-  width: '250px',
-  height: '50px',
-  fontSize: '24px'
-}
-
-const textStyle = {
-  marginLeft: '56px'
+  width: '220px'
 }
 
 class Hallway extends Component {
   constructor(props) {
     super(props)
+
+    this.getUsersInRoomCount = this.getUsersInRoomCount.bind(this)
 
     this.state = {
       nickname: sessionStorage.getItem('nickname'),
@@ -208,51 +201,73 @@ class Hallway extends Component {
     })
   }
 
+  getUsersInRoomCount(room_id) {
+    const usersForRoom = this.props.users.filter(el => {
+      return el.attributes["room-id"] === parseInt(room_id)
+    })
+    
+    return usersForRoom.length
+  }
+
+  getCurrentVideoTitle(room_id) {
+    const videosForRoom = this.props.videos.filter(el => {
+      return el.attributes["room-id"] === parseInt(room_id)
+    })
+
+    if (videosForRoom.length > 0) {
+      return videosForRoom[0].attributes.title
+    } else {
+      return "There are currently no videos."
+    }
+  }
+
   render() {
     return (
-      <div className="wrapper">
-      <center>
-          <form style={formStyle} onSubmit={this.handleNicknameChange.bind(this)}>
-            <input className="form-control" style={inputStyle} value={this.state.nickname} onChange={this.changeNicknameValue.bind(this)}></input>
-          </form>
-        </center>
-        <div className="row" style={rooms}>
-
-          <div className="col-md-4">
-            <div style={textStyle}>
-              <center>
-                <h2 style={basicStyle}>
-                  <Link style={basicStyle} to="/rooms/1">The Garden</Link>
-                </h2>
-              </center>
+      <div style={tryHarder}>
+        <h1 style={headerStyle}>Simultube</h1>
+        <table className="table table-hover" style={tableStyle}>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Current Video</th>
+              <th>Online Users</th>
+              <th>View</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>{this.getCurrentVideoTitle(1)}</td>
+              <td><strong>{this.getUsersInRoomCount(1) + "/6"}</strong></td>
+              <td><Link to="/rooms/1"><button style={btnStyle} className="btn btn-primary btn-sm">Enter</button></Link></td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>{this.getCurrentVideoTitle(2)}</td>
+              <td><strong>{this.getUsersInRoomCount(2) + "/6"}</strong></td>
+              <td><Link to="/rooms/2"><button style={btnStyle} className="btn btn-primary btn-sm">Enter</button></Link></td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td>{this.getCurrentVideoTitle(3)}</td>
+              <td><strong>{this.getUsersInRoomCount(3) + "/6"}</strong></td>
+              <td><Link to="/rooms/3"><button style={btnStyle} className="btn btn-primary btn-sm">Enter</button></Link></td>
+            </tr>
+          </tbody>
+        </table>
+        <br />
+        <form className="form-inline" style={formStyle} onSubmit={this.handleNicknameChange.bind(this)}>
+          <div className="form-group">
+            <label><h4>Your nickname is currently</h4></label>
+            <div className="input-group">
+                <input value={this.state.nickname} onChange={this.changeNicknameValue.bind(this)} type="text" className="form-control" placeholder="Change nickname..." />
+                <span className="input-group-btn">
+                  <button className="btn btn-primary" type="button">Change</button>
+                </span>
             </div>
-            <Link to="/rooms/1"><img src="https://i.imgur.com/uc2UetF.png" style={doorStyle}/></Link>
           </div>
-
-          <div className="col-md-4">
-            <div style={textStyle}>
-              <center>
-                <h2 style={basicStyle}>
-                  <Link style={basicStyle} to="/rooms/2">The Pool</Link>
-                </h2>
-              </center>
-            </div>
-           <Link to="/rooms/2"><img src="http://i.imgur.com/uc2UetF.png" style={doorStyle}/></Link>
-          </div>
-
-          <div className="col-md-4">
-            <div style={textStyle}>
-              <center>
-                <h2 style={basicStyle}>
-                  <Link style={basicStyle} to="/rooms/3">The Parlor</Link>
-                </h2>
-              </center>
-            </div>
-            <Link to="/rooms/3"><img src="http://i.imgur.com/uc2UetF.png" style={doorStyle}/></Link>
-          </div>
-        </div>
+        </form>
       </div>
-
     )
   }
 }
