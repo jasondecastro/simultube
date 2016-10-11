@@ -203,7 +203,7 @@ class Hallway extends Component {
 
   getUsersInRoomCount(room_id) {
     const usersForRoom = this.props.users.filter(el => {
-      return el.attributes["room-id"] === parseInt(room_id)
+      return el.attributes["room-id"] === parseInt(room_id, 10)
     })
     
     return usersForRoom.length
@@ -211,7 +211,7 @@ class Hallway extends Component {
 
   getCurrentVideoTitle(room_id) {
     const videosForRoom = this.props.videos.filter(el => {
-      return el.attributes["room-id"] === parseInt(room_id)
+      return el.attributes["room-id"] === parseInt(room_id, 10)
     })
 
     if (videosForRoom.length > 0) {

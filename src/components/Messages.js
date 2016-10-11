@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
 import Balloon from './Balloon'
 
 const bubbleStyle = {
@@ -17,26 +16,8 @@ const textStyle = {
 class Messages extends Component {
   constructor() {
     super()
-
-    // this.currentMessage = this.currentMessage.bind(this)
     this.bubbleMap = this.bubbleMap.bind(this)
   }
-
-  // currentMessage() {
-  //   if (this.props.messages.length > 0) {
-  //     return (
-  //       <p><strong>{this.props.messages[this.props.messages.length - 1].attributes.sender}:</strong> {this.props.messages[this.props.messages.length - 1].attributes.content}</p>
-  //     )
-  //   }
-  // }
-  //
-  // currentMessageContent() {
-  //   if (this.props.messages.length > 0) {
-  //     return (
-  //       this.props.messages[this.props.messages.length - 1].attributes.content
-  //     )
-  //   }
-  // }
 
   determineUserIndex(message) {
     return this.props.users.findIndex( user => message.attributes.sender === user.attributes.nickname )
@@ -95,7 +76,7 @@ class Messages extends Component {
           </Balloon>
       )
       } else {
-        return
+        return ''
       }
     })
   }

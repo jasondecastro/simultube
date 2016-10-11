@@ -10,7 +10,6 @@ import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import ReduxPromise from 'redux-promise'
 import rootReducer from './reducers'
-import { fetchTopics } from './actions'
 
 const store = createStore(rootReducer, applyMiddleware(ReduxPromise))
 
@@ -18,7 +17,6 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={App} />
-      <Route path="/hallway" component={App} />
       <Route path="/rooms/:id" component={Chatroom} />
     </Router>
   </Provider>,

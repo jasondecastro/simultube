@@ -1,15 +1,10 @@
 import React, { Component } from 'react'
-import Character from './Character'
 
 import { Link } from 'react-router'
 
 import { connect } from 'react-redux'
 import * as actions from '../actions'
 import { bindActionCreators } from 'redux'
-
-const nameStyle = {
-  color: 'black'
-}
 
 const screenStyle = {
   width: '462px',
@@ -19,11 +14,6 @@ const screenStyle = {
 const titleStyle = {
   color: 'black',
   fontSize: '18px'
-}
-
-const noVideo = {
-  width: '462px',
-  height: '260px'
 }
 
 const beTheChangeYouWantToBe = {
