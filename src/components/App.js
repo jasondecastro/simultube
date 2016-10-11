@@ -8,10 +8,6 @@ import '../static/chatbox.css'
 import Hallway from './Hallway'
 
 class App extends Component {
-  constructor() {
-    super()
-  }
-  
   render() {
     return (
       <Hallway />
