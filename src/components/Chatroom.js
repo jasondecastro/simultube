@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router'
 
 import Messages from './Messages'
 import MessageForm from './MessageForm'
@@ -9,8 +8,6 @@ import Characters from './Characters'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
 import { bindActionCreators } from 'redux'
-
-import Pusher from 'pusher-js'
 
 const tryHarder = {
   margin: '0 auto',
@@ -149,21 +146,21 @@ class Chatroom extends Component {
 
   filterMessages(room_id) {
     const messagesForRoom = this.props.messages.filter(el => {
-      return el.attributes["room-id"] === parseInt(room_id)
+      return el.attributes["room-id"] === parseInt(room_id, 10)
     })
     return messagesForRoom
   }
 
   filterUsers(room_id) {
     const usersForRoom = this.props.users.filter(el => {
-      return el.attributes["room-id"] === parseInt(room_id)
+      return el.attributes["room-id"] === parseInt(room_id, 10)
     })
     return usersForRoom
   }
 
   filterVideos(room_id) {
     const videosForRoom = this.props.videos.filter(el => {
-      return el.attributes["room-id"] === parseInt(room_id)
+      return el.attributes["room-id"] === parseInt(room_id, 10)
     })
 
     return videosForRoom
