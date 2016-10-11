@@ -1,5 +1,5 @@
-import React, { Component, PropTypes } from 'react';
-import Resizable from 'react-resizable-and-movable';
+import React, { Component, PropTypes } from 'react'
+import Resizable from 'react-resizable-and-movable'
 
 export default class Balloon extends Component {
   static propTypes = {
@@ -27,7 +27,7 @@ export default class Balloon extends Component {
     disable: PropTypes.bool,
     onClick: PropTypes.func,
     strokeColor: PropTypes.string,
-  };
+  }
 
   static defaultProps = {
     box: {
@@ -57,12 +57,12 @@ export default class Balloon extends Component {
     onPointerDragStop: () => null,
     disable: false,
     onClick: () => null,
-  };
+  }
 
   constructor(props) {
-    super(props);
-    const { box, pointer } = this.props;
-    const pointerState = this.getPointer(box, pointer);
+    super(props)
+    const { box, pointer } = this.props
+    const pointerState = this.getPointer(box, pointer)
     this.state = {
       pointer: pointerState,
       box: {
@@ -73,12 +73,12 @@ export default class Balloon extends Component {
       },
       maxHeight: this.props.maxHeight,
       maxWidth: this.props.maxWidth,
-    };
+    }
   }
 
   componentWillReceiveProps(nextProps) {
-    const { box, pointer } = nextProps;
-    const pointerState = this.getPointer(box, pointer);
+    const { box, pointer } = nextProps
+    const pointerState = this.getPointer(box, pointer)
     this.state = {
       pointer: pointerState,
       box: {
@@ -89,145 +89,145 @@ export default class Balloon extends Component {
       },
       maxHeight: this.props.maxHeight,
       maxWidth: this.props.maxWidth,
-    };
+    }
   }
 
   onBoxResize(_, { width, height }) {
-    const { box: { x, y }, pointer: { destination } } = this.state;
-    const toBottomBoundary = this.refs.wrapper.clientHeight - y;
-    const toRightBoundary = this.refs.wrapper.clientWidth - x;
+    const { box: { x, y }, pointer: { destination } } = this.state
+    const toBottomBoundary = this.refs.wrapper.clientHeight - y
+    const toRightBoundary = this.refs.wrapper.clientWidth - x
     const maxHeight = (toBottomBoundary < this.props.maxHeight || !this.props.maxHeight)
             ? toBottomBoundary
-            : this.props.maxHeight;
+            : this.props.maxHeight
     const maxWidth = (toRightBoundary < this.props.maxWidth || !this.props.maxWidth)
             ? toRightBoundary
-            : this.props.maxWidth;
-    const box = { x, y, width, height };
-    const pointerState = this.getPointer(box, destination);
+            : this.props.maxWidth
+    const box = { x, y, width, height }
+    const pointerState = this.getPointer(box, destination)
     this.setState({
       pointer: pointerState,
       box,
       maxHeight,
       maxWidth,
-    });
-    this.props.onBoxResize({ width, height });
+    })
+    this.props.onBoxResize({ width, height })
   }
 
   onBoxDrag(e, { position }) {
-    const { box: { width, height }, pointer: { destination } } = this.state;
-    const x = position.left;
-    const y = position.top;
-    const box = { x, y, width, height };
-    const pointerState = this.getPointer(box, destination);
+    const { box: { width, height }, pointer: { destination } } = this.state
+    const x = position.left
+    const y = position.top
+    const box = { x, y, width, height }
+    const pointerState = this.getPointer(box, destination)
     this.setState({
       pointer: pointerState,
       box,
-    });
-    this.props.onBoxDrag(position);
+    })
+    this.props.onBoxDrag(position)
   }
 
   onBoxDragStop(e, { position }) {
-    this.props.onBoxDragStop(position);
+    this.props.onBoxDragStop(position)
   }
 
   onPointerDrag(e, { position }) {
-    const { box } = this.state;
-    const destination = { x: position.left + 15, y: position.top + 15 };
-    const pointerState = this.getPointer(box, destination);
-    this.setState({ pointer: pointerState });
-    this.props.onPointerDrag(position);
+    const { box } = this.state
+    const destination = { x: position.left + 15, y: position.top + 15 }
+    const pointerState = this.getPointer(box, destination)
+    this.setState({ pointer: pointerState })
+    this.props.onPointerDrag(position)
   }
 
   onPointerDragStop(e, { position }) {
-    this.props.onPointerDragStop(position);
+    this.props.onPointerDragStop(position)
   }
 
   getBoxCenter(box) {
     return {
       x: box.x + box.width / 2,
       y: box.y + box.height / 2,
-    };
+    }
   }
 
   getPointerType(origin, destination) {
-    // const degree = this.getDegree(origin, destination);
-    // if (degree >= -45 && degree < 45) return 'right';
-    // if (degree >= 45 && degree < 135) return 'top';
-    // if ((degree >= 135 && degree <= 180) || (degree >= -180 && degree < -135)) return 'left';
-    return 'bottom';
+    // const degree = this.getDegree(origin, destination)
+    // if (degree >= -45 && degree < 45) return 'right'
+    // if (degree >= 45 && degree < 135) return 'top'
+    // if ((degree >= 135 && degree <= 180) || (degree >= -180 && degree < -135)) return 'left'
+    return 'bottom'
   }
 
   getDegree(origin, destination) {
-    const x = destination.x - origin.x;
-    const y = origin.y - destination.y;
-    const rad = Math.atan2(y, x);
-    if (isNaN(rad)) return 0;
-    return rad * 360 / (2 * Math.PI);
+    const x = destination.x - origin.x
+    const y = origin.y - destination.y
+    const rad = Math.atan2(y, x)
+    if (isNaN(rad)) return 0
+    return rad * 360 / (2 * Math.PI)
   }
 
   getPointer(box, destination) {
-    const boxCenter = this.getBoxCenter(box);
-    const type = this.getPointerType(boxCenter, destination);
-    return this.calculatePointer(destination, box, type);
+    const boxCenter = this.getBoxCenter(box)
+    const type = this.getPointerType(boxCenter, destination)
+    return this.calculatePointer(destination, box, type)
   }
 
   calculatePointer(destination, box, type) {
-    let base;
-    let control;
-    const { x, y, width, height } = box;
+    let base
+    let control
+    const { x, y, width, height } = box
 
     switch (type) {
       case 'top' :
         base = [
           { x: x + width * 0.25, y: y + 1 },
           { x: x + width * 0.75, y: y + 1 },
-        ];
-        control = { x: x + width * 0.5, y };
-        break;
+        ]
+        control = { x: x + width * 0.5, y }
+        break
       case 'right' :
         base = [
           { x: x + width - 1, y: y + height * 0.25 },
           { x: x + width - 1, y: y + height * 0.75 },
-        ];
-        control = { x: x + width, y: y + height * 0.5 };
-        break;
+        ]
+        control = { x: x + width, y: y + height * 0.5 }
+        break
       case 'bottom' :
         base = [
           { x: x + width * 0.25, y: y + height - 1 },
           { x: x + width * 0.75, y: y + height - 1 },
-        ];
-        control = { x: x + width * 0.5, y: y + height };
-        break;
+        ]
+        control = { x: x + width * 0.5, y: y + height }
+        break
       case 'left' :
         base = [
           { x, y: y + height * 0.25 },
           { x, y: y + height * 0.75 },
-        ];
-        control = { x, y: y + height * 0.5 };
-        break;
+        ]
+        control = { x, y: y + height * 0.5 }
+        break
       default:
         base = [
           { x: x + width, y: y + height * 0.25 },
           { x: x + width, y: y + height * 0.75 },
-        ];
-        control = { x: x + width, y: y + height * 0.5 };
-        break;
+        ]
+        control = { x: x + width, y: y + height * 0.5 }
+        break
     }
 
     return {
       base,
       control,
       destination,
-    };
+    }
   }
 
   render() {
     const { box, pointer, backgroundColor, zIndex, minWidth, minHeight,
             marker, className, children, style, onPointerDragStart,
-            onBoxDragStart, onBoxResizeStart, onBoxResizeStop, disable, strokeColor } = this.props;
-    const { base, destination, control } = this.state.pointer;
-    const { maxHeight, maxWidth } = this.state;
-    const cursor = disable ? { cursor: 'default' } : {};
+            onBoxDragStart, onBoxResizeStart, onBoxResizeStop, disable, strokeColor } = this.props
+    const { base, destination, control } = this.state.pointer
+    const { maxHeight, maxWidth } = this.state
+    const cursor = disable ? { cursor: 'default' } : {}
     return (
       <div
         ref="wrapper"
@@ -328,6 +328,6 @@ export default class Balloon extends Component {
           />
         </svg>
       </div>
-    );
+    )
   }
 }
