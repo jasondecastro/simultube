@@ -116,6 +116,7 @@ class Chatroom extends Component {
   }
 
   patchUserRoomId() {
+    console.log('patching the room id')
     const url = 'https://flowers-endpoint.herokuapp.com/api/v1/users/' + sessionStorage.getItem('id')
     fetch(url,
     {
@@ -139,10 +140,9 @@ class Chatroom extends Component {
   }
 
   componentWillMount() {
-    const room_id = document.location.href.split("/")[document.location.href.split("/").length - 1]
     this.patchUserRoomId()
   }
-
+  
   getRoomId() {
     return document.location.href.split("/")[document.location.href.split("/").length - 1]
   }

@@ -43,6 +43,7 @@ class Hallway extends Component {
   }
 
   initializeUser() {
+    console.log('initializing user')
     const url = 'https://flowers-endpoint.herokuapp.com/api/v1/users/'
     return fetch(url,
     {
@@ -103,6 +104,7 @@ class Hallway extends Component {
 
   componentWillMount() {
     if (!sessionStorage.nickname) {
+      console.log("fetching users and videos")
       this.initializeUser()
       .then( () => {
         this.props.actions.fetchUsers()
@@ -273,6 +275,7 @@ class Hallway extends Component {
 }
 
 function mapStateToProps(state){
+  console.log("hello!!! you reached map state to props.", state)
   return {
     topics: state.topics,
     messages: state.messages,
@@ -282,6 +285,7 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch) {
+  console.log("dispatchhhh", dispatch)
   return {
     actions: bindActionCreators(actions, dispatch)
   }
