@@ -10,7 +10,6 @@ import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import ReduxPromise from 'redux-promise'
 import rootReducer from './reducers'
-import { fetchTopics } from './actions'
 
 const store = createStore(rootReducer, applyMiddleware(ReduxPromise))
 

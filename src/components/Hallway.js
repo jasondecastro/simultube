@@ -43,7 +43,6 @@ class Hallway extends Component {
   }
 
   initializeUser() {
-    console.log('initializing user')
     const url = 'https://flowers-endpoint.herokuapp.com/api/v1/users/'
     return fetch(url,
     {
@@ -104,7 +103,6 @@ class Hallway extends Component {
 
   componentWillMount() {
     if (!sessionStorage.nickname) {
-      console.log("fetching users and videos")
       this.initializeUser()
       .then( () => {
         this.props.actions.fetchUsers()
@@ -205,7 +203,7 @@ class Hallway extends Component {
 
   getUsersInRoomCount(room_id) {
     const usersForRoom = this.props.users.filter(el => {
-      return el.attributes["room-id"] === parseInt(room_id)
+      return el.attributes["room-id"] === parseInt(room_id, 10)
     })
     
     return usersForRoom.length
@@ -213,7 +211,7 @@ class Hallway extends Component {
 
   getCurrentVideoTitle(room_id) {
     const videosForRoom = this.props.videos.filter(el => {
-      return el.attributes["room-id"] === parseInt(room_id)
+      return el.attributes["room-id"] === parseInt(room_id, 10)
     })
 
     if (videosForRoom.length > 0) {
@@ -275,7 +273,6 @@ class Hallway extends Component {
 }
 
 function mapStateToProps(state){
-  console.log("hello!!! you reached map state to props.", state)
   return {
     topics: state.topics,
     messages: state.messages,
@@ -285,7 +282,6 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch) {
-  console.log("dispatchhhh", dispatch)
   return {
     actions: bindActionCreators(actions, dispatch)
   }
